@@ -1,0 +1,32 @@
+<div class="modal fade" id="add_new_jobs" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="form-login p-3">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h2>Please Deposit Before You Post a New Job</h2>
+            <p class="mb-4">The higher you deposit, the higher chances to get to the top list job recommendation</p>
+            <form>
+                <input type="text" class="form-control form-th ps-3" placeholder="How much you willing to pay? (per 1 person)">
+                <div class="text-end mb-2"><span class="intro-i">min. IDR 2.000.000</span></div>
+                <input type="text" class="form-control form-th ps-3 mb-3" placeholder="How many positions?">
+                <select
+                  name="bank"
+                  id="bank"
+                  class="form-select form-th mb-4"
+                >
+                  <option>Destination Bank</option>
+                  <option>Destination Bank Surabayar</option>
+                  <option>Destination Bank Bandung</option>
+                  <option>Destination Bank Malang</option>
+                  <option>Destination Bank Semarang</option>
+                </select>
+                <div class="text-end">
+                  <button class="btn btn-yellow px-5" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#payment_confirmation">Deposit</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

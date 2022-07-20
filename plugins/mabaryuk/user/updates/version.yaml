@@ -1,0 +1,49 @@
+1.0.1:
+    - 'First version of User'
+1.0.2:
+    - 'Add profile columns to users table'
+    - add_profile_columns_on_users_table.php
+1.0.3:
+    - 'Add company id column to users table'
+    - add_company_id_column_on_users_table.php
+1.0.4:
+    - 'Add talent columns to users table'
+    - add_talent_columns_on_users_table.php
+1.0.5:
+    - 'Seed user groups'
+    - seed_user_groups_table.php
+1.0.6:
+    - 'Create cv tables'
+    - create_certificates_table.php
+    - create_education_table.php
+    - create_langs_table.php
+    - create_nonformal_educations_table.php
+    - create_organizations_table.php
+    - create_working_experiences_table.php
+    - create_projects_table.php
+    - create_skills_table.php
+    - create_users_skills_table.php
+1.0.7:
+    - 'Add address columns on users table'
+    - add_address_columns_on_users_table.php
+1.0.8:
+    - 'Seed user skills'
+    - seed_skills_table.php
+1.0.9:
+    - 'Add register as column on users table'
+    - add_register_as_column_on_users_table.php
+1.0.10:
+    - 'Add flag complete profile column on users table'
+    - add_is_profile_complete_column_on_users_table.php
+1.0.11:
+    - 'Add months experience column on users table'
+    - add_months_exp_column_on_users_table.php
+1.0.12:
+    - 'Add last active as column on users table'
+    - add_last_active_as_column_on_users_table.php
+1.0.13:
+    - 'Update cv columns on users table'
+    - update_cv_columns_on_users_table.php
+1.0.14:
+    - 'Seed user skills 2'
+    - seed_skills2_table.php

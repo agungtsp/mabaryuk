@@ -1,0 +1,100 @@
+title = "My Clients"
+url = "/mycompany/clients"
+layout = "default"
+
+[session]
+security = "user"
+allowedUserGroups[] = "admin_company"
+redirect = "home"
+
+[clientList]
+[companyAccount]
+==
+<section class="dtl-acc company-client sec-first">
+    <div class="card list-prof mb-3 h_talent">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="pr-name fs-30">Your Clients</div>
+                        <div class="act-list">
+                            <div>
+                                <span>{{ company.clients_count|default(0) }}</span> Clients
+                            </div>
+                            <div>
+                                <span>{{ company.clients.sum('jobs_published_count')|default(0) }}</span> Active Recruitment
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-end">
+                        <div class="action">
+                            <a href="{{ url('mycompany/client/new') }}" class="btn btn-yellow fs-14 px-5 mt-4 py-2">Add New Client</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-3 pe-5">
+                <div class="title-list">Filter</div>
+                <form action="">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-white"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control border-start-0" name="keyword" value="{{ get('keyword') }}" placeholder="Search Client">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-9">
+                <div class="title-list">Clients</div>
+                <div class="title-list-search hide">Showing Result for <strong>'Design'</strong></div>
+                {% if clients.total == 0 %}
+                    <div class="not-referred">
+                        <h5>You don't have any Clients</h5>
+                        <img src="{{ 'assets/images/not-referred.jpg'|theme }}" alt="" width="150">
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>
+                        <a href="{{ url('/mycompany/job/new') }}" class="btn btn-yellow px-5">Add Client</a>
+                    </div>
+                {% else %}
+                    {% for item in clients %}
+                    <div class="card list-prof mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <!-- <div class="pr-prossstat text-blue">Recruitment Process</div> -->
+                                    <div class="pr-name">{{ item.name }}</div>
+                                    <div class="date">{{ item.ref_industry.name }}</div>
+                                    <div class="act-list">
+                                        <div>
+                                            <span>{{ item.jobs.sum('number_required')|default(0) }}</span> Position Needed
+                                        </div>
+                                        <div>
+                                            <span>{{ item.jobs.sum('applicants_count')|default(0) }}</span> Applied to This Company
+                                        </div>
+                                        <div>
+                                            <span>{{ item.jobs.sum('applicants_processed_count')|default(0) }}</span> Talents Processed
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 text-end">
+                                    <div class="action mt-5">
+                                        <a href="{{ url('mycompany/client/' ~ item.id ~ '/edit') }}" class="btn btn-outline-secondary w-auto ms-1">Edit</a>
+                                        <a href="#" class="btn btn-outline-danger w-auto ms-1" data-bs-toggle="modal" data-bs-target="#delete_alert_modal-{{ item.id }}">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% partial 'modal-delete-alert' id=item.id title=item.name %}
+                    {% endfor %}
+                    <div class="text-center mt-5">
+                        <nav class="d-inline-block">
+                            {% partial 'pagination' records=clients %}
+                        </nav>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

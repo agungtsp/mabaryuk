@@ -1,0 +1,165 @@
+{% if tab == 'face2face' %}
+    <form
+        class="formInteviewFillment"
+        action="">
+        <input type="hidden" name="id" value="{{ candidate.id }}">
+        <input type="hidden" name="applicant_id" value="{{applicant_id}}">
+        <input type="hidden" name="note[type]" value="{{tab}}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Date</label>
+                    <label class="form-date">
+                        <i data-feather="calendar"></i>
+                        <input type="text" name="note[date_meeting]" value="" required class="form-control form-th datepicker" placeholder="Set Meeting Date">
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Time</label>
+                    <label for="" class="form-date">
+                        <i data-feather="clock"></i>
+                        <input type="time" name="note[time_meeting]" required value="" class="form-control form-th" placeholder="Set Meeting Clock">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="group-li mb-3">
+                    <label for="">Location or Vanue</label>
+                    <label for="location" class="form-date">
+                        <i data-feather="map-pin"></i>
+                        <input type="text" id="location" name="note[location]" required class="form-control form-th" placeholder="Set Location or Venue">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Contact Person Name</label>
+                    <input type="text" class="form-control form-th" name="note[contact_person_name]" required placeholder="Contact Person Name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Contact Person Phone</label>
+                    <input type="text" class="form-control form-th" name="note[contact_person_phone]" required placeholder="Contact Person Name">
+                </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="col-md-12 mx-auto">
+                <button type="submit" class="btn btn-yellow-gradient w-100" data-attach-loading {% if candidate.new_status not in [8] %} disabled {% endif %}>Send Invitation</button>
+            </div>
+        </div>
+    </form>
+{% endif %}
+{% if tab == 'video_call' %}
+    <form action="" class="formInteviewFillment">
+        <input type="hidden" name="id" value="{{ candidate.id }}">
+        <input type="hidden" name="applicant_id" value="{{applicant_id}}">
+        <input type="hidden" name="note[type]" value="{{tab}}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Date</label>
+                    <label class="form-date">
+                        <i data-feather="calendar"></i>
+                        <input type="text" name="note[date_meeting]" value="" required class="form-control form-th datepicker" placeholder="Set Meeting Date">
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Time</label>
+                    <label for="" class="form-date">
+                        <i data-feather="clock"></i>
+                        <input type="time" name="note[time_meeting]" required value="" class="form-control form-th" placeholder="Set Meeting Clock">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="group-li mb-3">
+                    <label for="">Link Video Call Room</label>
+                    <label for="video_link" class="form-date">
+                        <i data-feather="link"></i>
+                        <input type="text" id="video_link" name="note[video_link]" required class="form-control form-th" placeholder="Set Location or Venue">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Contact Person Name</label>
+                    <input type="text" class="form-control form-th" name="note[contact_person_name]" required placeholder="Contact Person Name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Contact Person Phone</label>
+                    <input type="text" class="form-control form-th" name="note[contact_person_phone]" required placeholder="Contact Person Name">
+                </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="col-md-12 mx-auto">
+                <button type="submit" class="btn btn-yellow-gradient w-100" data-attach-loading {% if candidate.new_status not in [8] %} disabled {% endif %}>Send Invitation</button>
+            </div>
+        </div>
+    </form>
+{% endif %}
+{% if tab == 'phone_call' %}
+    <form action="" class="formInteviewFillment">
+        <input type="hidden" name="id" value="{{ candidate.id }}">
+        <input type="hidden" name="applicant_id" value="{{applicant_id}}">
+        <input type="hidden" name="note[type]" value="{{tab}}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Date</label>
+                    <label class="form-date">
+                        <i data-feather="calendar"></i>
+                        <input type="text" name="note[date_meeting]" value="" required class="form-control form-th datepicker" placeholder="Set Meeting Date">
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Time</label>
+                    <label for="" class="form-date">
+                        <i data-feather="clock"></i>
+                        <input type="time" name="note[time_meeting]" required value="" class="form-control form-th" placeholder="Set Meeting Clock">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Contact Person Name</label>
+                    <input type="text" class="form-control form-th" name="note[contact_person_name]" required placeholder="Contact Person Name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="group-li mb-3">
+                    <label for="">Phone Call Duration</label>
+                    <label for="" class="form-date">
+                        <i data-feather="watch"></i>
+                        <input type="text" class="form-control form-th" required name="note[phone_call_duration]" placeholder="Estimate Phone Call Duration">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="col-md-12 mx-auto">
+                <button type="submit" class="btn btn-yellow-gradient w-100" data-attach-loading {% if candidate.new_status not in [8] %} disabled {% endif %}>Send Invitation</button>
+            </div>
+        </div>
+    </form>
+{% endif %}

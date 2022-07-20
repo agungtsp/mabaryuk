@@ -1,0 +1,118 @@
+title = "Edit Job Posting"
+url = "/mycompany/job/:job_id/view"
+layout = "default"
+
+[session]
+security = "user"
+allowedUserGroups[] = "admin_company"
+redirect = "home"
+
+[jobPostEdit]
+==
+<section class="dtl-acc sec-first">
+    {% if not job.billing.is_paid and job.ref_job_status_id in [1,2,3] %}
+    <div class="card list-prof mb-3 h_talent">
+        <div class="card-body">
+            {% if job.billing.ref_billing_status_id == 2 %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        You've sent your payment receipt, please wait a moment.
+                        <br>Our team are currently processing your receipt.
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col text-center">
+                                <a class="btn btn-outline-secondary w-50 py-2" href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}">Back to Candidate List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        To access full information about this candidate, please <b>complete your payment.</b>
+                        <br> All the payment details has been sent to <b>your email.</b>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col text-end">
+                                <a class="btn btn-outline-secondary w-50 py-2" href="{{ url('mycompany/profile?#draft' ) }}">Back to Draft</a>
+                            </div>
+                            <div class="col">
+                                <a href="#" class="btn btn-primary w-50 py-2">I Already Completed My Payment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="container py-5">
+        {% if job.billing.is_paid %}
+        <a class="btn" href="{{ url('mycompany/profile?#draft' ) }}">Back to Draft</a>
+        {% elseif not job.ref_job_status_id in [1,2,3] %}
+        <a class="btn" href="{{ url('mycompany/profile' ) }}">Back to Job Posted</a>
+        {% endif %}
+        <div class="card">
+            {% if not job.ref_job_status_id in [1, 2, 3] %}
+            <a href="{{ url('mycompany/job/' ~ job.id ~ '/edit') }}" class="btn btn-yellow btn-edit-cv"><i data-feather="edit"></i> Edit Job Post</a>
+            {% else %}
+            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow btn-edit-cv">View All Candidates</a>
+            {% endif %}
+            <div class="card-body">
+                <div class="col-sm-12 pt-2">
+                    <div class="pr-prossstat text-blue">{{ job.total_positions }} Positions Required</div>
+                    <a href="{{ url('mycompany/job/' ~ job.id ~ '/view') }}"><div class="pr-name">{{ job.title }}</div></a>
+                    <div class="d-flex align-items-center">
+
+                        {% if job.ref_job_status_id in [1, 2, 3] %}
+                        <div class="date">Drafted on {{ job.status_updated_at|date('j F Y') }}</div>
+                        {% elseif job.ref_job_status_id in [5, 6, 7] %}
+                        <div class="date">Unpublished on {{ job.status_updated_at|date('j F Y') }}</div>
+                        {% else %}
+                        <div class="date">Posted on {{ job.status_updated_at|date('j F Y') }}</div>
+                        {% endif %}
+
+                        {% if job.billing.ref_billing_status_id == 3 %}
+                        <div class="stat-job paid"><i data-feather="check-circle"></i> <span>Paid</span></div>
+                        {% elseif job.billing.ref_billing_status_id == 2 %}
+                        <div class="stat-job processed"><i data-feather="clock"></i> <span>Payment Processed</span></div>
+                        {% else %}
+                        <div class="stat-job waiting"><i data-feather="alert-circle"></i> <span>Waiting for Payment</span></div>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="col-sm-12">
+                    <div>Job Description</div>
+                    <div>{{ job.description|raw }}</div>
+                </div>
+                <hr class="my-4">
+                <!-- <div class="col-sm-12">
+                    <div>Job Qualifications</div>
+                    <ul>
+                        {% for q in job.qualifications %}
+                        <li>{{ q.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <hr class="my-4"> -->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div>Standard Fee</div>
+                        <div>IDR {{ job.billing.subtotal|number_format(0, ',', '.') }}</div>
+                    </div>
+                    <!-- <div class="col-sm-6">
+                        <div>Priority Fee</div>
+                        <div>IDR {{ job.billing.priority_fee|number_format(0, ',', '.') }}</div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,23 @@
+
+<div class="container px-4">
+    <div class="row">
+        <div class="col">
+            {{ form_open() }}
+                <select id="languageSelect" class="selectpicker sp-ft">
+                    <option value="en" {% if activeLocale == 'en' %} selected {% endif %} name="locale" data-content='<span class="flag-icon flag-icon-gb"></span> English'>English</option>
+                    <option value="id" {% if activeLocale == 'id' %} selected {% endif %} name="locale" data-content='<span class="flag-icon flag-icon-id"></span> Indonesia'>Indonesia</option>
+                </select>
+            {{ form_close() }}
+        </div>
+        <div class="col ft-copyright">
+            Copyright © 2022 Deptech
+            <!-- <img src="{{ 'assets/images/logo-deptech.png'|theme }}" alt="" class="logo-deptech">
+            <p>
+                The CEO Building Level 12<br>
+                JL. TB. Simatupang No. 18C <br>
+                RT. 006, RW. 009, Cilandak Barat, <br>
+                1Cilandak, Jakarta Selatan 12430
+            </p> -->
+        </div>
+    </div>
+</div>

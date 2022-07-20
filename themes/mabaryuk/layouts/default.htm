@@ -1,0 +1,126 @@
+description = "Default layout"
+
+[session]
+[localePicker]
+[heroAccount]
+redirect = 0
+[heroResetPassword]
+paramCode = "code"
+==
+use MabarYuk\User\Models\Recaptcha as RecaptchaSetting;
+function onStart() {
+    $this['recaptcha_is_enable'] = ((bool) RecaptchaSetting::get('is_enable', false));
+    $this['site_key'] = RecaptchaSetting::get('site_key', '');
+    $this['reset_code'] = $this->heroResetPassword->code();
+    $this['is_activate'] = $this->heroAccount->activationCode();
+}
+==
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Talent Hero - {{ this.page.title }}</title>
+        <meta name="description" content="{{ this.page.meta_description }}">
+        <meta name="title" content="{{ this.page.meta_title }}">
+        <meta name="author" content="MabarYuk">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="generator" content="MabarYuk">
+        <link rel="icon" type="image/x-icon" href="{{ 'assets/images/favicon.png'|theme }}">
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{{ 'assets/css/bootstrap.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/css/bootstrap-select.min.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/vendor/select2/css/select2.min.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/vendor/daterangepicker/daterangepicker.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/css/select.css'|theme }}" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css" rel="stylesheet" />
+        <link href="{{ 'assets/css/all.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/css/style.css'|theme }}" rel="stylesheet">
+        <link href="{{ 'assets/css/responsive.css'|theme }}" rel="stylesheet">
+        <script src="https://unpkg.com/feather-icons"></script>
+        {% styles %}
+    </head>
+    <body id="page-top" class="{{ 'page-'~this.page.id }}">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-md bg-darkblue fixed-top" id="mainNav">
+            {% partial 'navigation' %}
+        </nav>
+
+        <!-- Content -->
+        {% page %}
+
+        <!-- Footer -->
+        <footer class="bg-darkblue text-white">
+            {% partial 'footer' %}
+        </footer>
+
+        <!-- Modal Register -->
+        {% partial 'modal-register' %}
+
+        <!-- Modal Password sent -->
+        {% partial 'modal-email-sent' %}
+
+        <!-- Modal Login -->
+        {% partial 'modal-login' %}
+
+        <!-- Modal Congratulation -->
+        {% partial 'modal-congratulation' role="Hero" %}
+
+        <!-- Modal Reset Password -->
+        {% partial 'modal-reset-password' %}
+
+        <!-- Modal Reset Password Succeed -->
+        {% partial 'modal-reset-password-succeed' %}
+
+        <!-- Modal Become a Hero -->
+        {% partial 'myaccount/modal-become-hero' %}
+
+        <!-- Modal Find Jobs -->
+        {% partial 'myaccount/modal-become-talent' %}
+
+        <!-- Modal Request Create CV -->
+        {% partial 'modal-create-cv' %}
+
+        <div class="thanks hide">Thankyou! A talent has been added, please tell your friend to check their email</div>
+
+        <!-- Scripts -->
+        <!-- Bootstrap core JS-->
+        <script src="{{ 'assets/js/jquery.min.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/jquery-validation/jquery.validate.min.js'|theme }}"></script>
+        <script src="{{ 'assets/js/bootstrap.bundle.min.js'|theme }}"></script>
+        <script src="{{ 'assets/js/bootstrap-select.min.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/daterangepicker/moment.min.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/daterangepicker/daterangepicker.min.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js'|theme }}"></script>
+        <script src="{{ 'assets/js/fontawesome.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/modernizr/modernizr.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/select2/js/select2.full.min.js'|theme }}"></script>
+        <script src="{{ 'assets/js/bootstrap-filestyle.min.js'|theme }}"></script>
+        <script src="{{ 'assets/js/select.js'|theme }}"></script>
+        <!-- Core theme JS-->
+        <script src="{{ 'assets/js/scripts.js'|theme }}"></script>
+        <script src="{{ 'assets/js/app.js'|theme }}"></script>
+        {% if recaptcha_is_enable and site_key%}
+            <script src="https://www.google.com/recaptcha/api.js?render={{ site_key }}"></script>
+            <script>
+                const site_key = `{{ site_key }}`
+            </script>
+        {% endif %}
+        <script type="text/javascript">
+        $(document).ready(function(){
+            if ('{{ is_activate }}') {
+                new bootstrap.Modal(document.getElementById('congratulation')).show();
+            }
+            if ('{{ reset_code }}') {
+                new bootstrap.Modal(document.getElementById('reset_password_modal')).show();
+            }
+        });
+        </script>
+
+        {% framework extras %}
+        {% scripts %}
+    </body>
+</html>

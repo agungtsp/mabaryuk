@@ -1,0 +1,26 @@
+<div class="modal fade" id="modal_attention-{{ id }}" tabindex="-1" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="form-login p-3 text-center">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <img src="{{ 'assets/images/envalope.jpg'|theme }}" alt="" width="85" class="mt-4">
+            <h2 class="my-3">Attention!</h2>
+            <p>You cant edit or delete your job after you post it. Do you want to continue?</p>
+            <div class="row mt-4">
+              <div class="col">
+                <a href="#" class="btn btn-outline-primary fs-12 w-100 py-2" data-bs-dismiss="modal" aria-label="Close">No, Don't Continue</a>
+              </div>
+              <div class="col">
+                <a href="#" class="btn btn-primary fs-12 w-100 py-2"
+                  data-request="jobPostAction::onPublish"
+                  data-request-success="$('#modal_attention-{{ id }}').modal('hide');$('#job_posted').modal('show');$('#nav-draft-tab').click();refreshTabs();"
+                  data-request-data="id: {{ id }}"
+                  data-attach-loading><b>Yes, Post My Job</b></a>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

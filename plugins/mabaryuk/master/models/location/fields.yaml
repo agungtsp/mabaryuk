@@ -1,0 +1,30 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    parent_code:
+        label: Parent
+        span: auto
+        type: dropdown
+        emptyOption: -- Select Parent --
+    code:
+        label: Code
+        required: true
+        span: auto
+    name:
+        label: Name
+        required: true
+        span: auto
+    alias:
+        label: Alias
+        span: auto
+    postal_code:
+        label: Postal Code
+        span: auto
+    lat:
+        label: Latitude
+        span: auto
+    lng:
+        label: Longitude
+        span: auto

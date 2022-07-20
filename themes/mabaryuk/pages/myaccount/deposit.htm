@@ -1,0 +1,138 @@
+title = "Deposit"
+url = "/deposit"
+layout = "default"
+
+[session]
+security = "user"
+redirect = "home"
+==
+<section class="page-noh">
+    <div class="container">
+        <div class="row my-5 justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <!-- Step 1 -->
+                <div class="deposit-form hide">
+                    <div class="mb-5">
+                        <div class="status">
+                            <span>Deposit</span>
+                            <span>1/2</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="title-list">Please Deposit Before You Post a New Job</div>
+                    <ul class="in-form ps-3 mb-4">
+                        <li>We put the highest bid on the top of the job list</li>
+                        <li>You'll get a better chance to get yourself a top place if your bid are high enough</li>
+                    </ul>
+                    <div class="group-li mb-4">
+                        <label for="job">Position / Job Title</label> 
+                        <input type="text" name="job" class="form-control form-th" placeholder="Position / Job Title">
+                    </div>
+                    <div class="group-li mb-4">
+                        <label for="">People Required For This Position</label> 
+                        <input type="text" name="" class="form-control form-th" placeholder="How many position / person needed for this job?">
+                    </div>
+                    <div class="group-li">
+                        <label for="">Deposit Per Position</label> 
+                        <input type="text" name="" class="form-control form-th" placeholder="How much are you willing to pay for this job? (per 1 position / person)">
+                    </div>
+                    <div class="text-end mb-4">
+                        <span class="forgot-pass">*min. IDR 2.000.000 / position or person</span>
+                    </div>
+                    <div class="group-li mb-5">
+                        <label for="">Destination Bank</label> 
+                        <select
+                            name=""
+                            id=""
+                            class="form-select form-th mb-4"
+                            placeholder="Choose your preferred bank destination"
+                          >
+                            <option>Destination Bank 1</option>
+                            <option>Destination Bank 2</option>
+                            <option>Destination Bank 3</option>
+                          </select>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-outline-secondary w-100 py-2">Cancel</button>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="btn btn-yellow w-100 py-2" data-bs-toggle="modal" data-bs-target="#deposit_summary">Deposit</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="deposit-form">
+                    <div class="mb-5">
+                        <div class="status">
+                            <span>Job Qualification</span>
+                            <span>2/2</span>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="title-list">Post a Job</div>
+                    <div class="group-li mb-4">
+                        <label for="job">Position / Job Title</label> 
+                        <input type="text" name="job" class="form-control form-th" placeholder="Senior Full-Stack Rails Developer">
+                    </div>
+                    <div class="group-li mb-4">
+                        <label for="">People Required For This Position</label> 
+                        <input type="text" name="" class="form-control form-th" placeholder="How many position / person needed for this job?">
+                    </div>
+                    <div class="group-li mb-4">
+                        <label for="">Minimum Working Experience</label> 
+                        <input type="text" name="" class="form-control form-th" placeholder="Minimum Working Experience">
+                    </div>
+                    <div class="group-li">
+                        <label for="workCulture">Job Qualification</label> 
+                        <div class="list-comp form-th">
+                            <div class="workculture">
+                                <ul>
+                                    <li>Write clean, reusable, maintainable code <span><i data-feather="trash-2"></i></span></li>
+                                    <li>Write clean, reusable, maintainable code <span><i data-feather="trash-2"></i></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end mb-4">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#add_work_culture" class="forgot-pass">+add more Qualifications</a>
+                    </div>
+                    <div class="group-li mb-5">
+                        <label for="">Process</label> 
+                        <input type="text" name="" class="form-control form-th" placeholder="Process">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-outline-secondary w-100 py-2">Cancel</button>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="btn btn-yellow w-100 py-2" data-bs-toggle="modal" data-bs-target="#job_posted">Post</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal Summary -->
+{% partial 'modal-summary' %}
+
+<!-- Modal Payment Request Sent -->
+{% partial 'modal-payment-request-sent' %}
+
+<!-- Modal Add Job Qualification -->
+{% partial 'mycompany/modal-add-work-culture' %}
+
+<!-- Modal Job Posted -->
+{% partial 'modal-job-posted2' %}
+
+<!-- Modal Job Post Delete -->
+{% partial 'modal-job-post-delete' %}
+
+<!-- Modal Delete Job -->
+{% partial 'modal-delete-job' %}

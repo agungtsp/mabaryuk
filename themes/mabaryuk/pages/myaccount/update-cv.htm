@@ -1,0 +1,154 @@
+title = "Update CV"
+url = "myaccount/update-cv"
+layout = "default"
+
+[session]
+security = "user"
+allowedUserGroups[] = "hero"
+redirect = "home"
+
+[master]
+==
+function onEnd()
+{
+    $this->user->load(['educations', 'certificates',
+        'certificates.doc', 'nonformal_educations',
+        'organizations', 'working_exps', 'working_exps.projects',
+        'lang_skills', 'lang_skills.ref', 'lang_skills.level',
+        'skills', 'skills.ref', 'skills.level']);
+}
+==
+<section class="page-noh">
+    <div class="container">
+        <div class="row my-5 justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <!-- {% flash error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endflash %} -->
+                <form
+                    id="form-cv"
+                    data-request="heroAccount::onSaveCV"
+                    data-request-success="$('#cv_saved_modal').modal('show');"
+                    data-request-redirect="my-cv"
+                    data-request-files
+                    data-browser-validate
+                    enctype="multipart/form-data"
+                >
+                    {% if user.is_profile_complete == false %}
+                        {% partial 'myaccount/cv/form-new-cv' %}
+                    {% else %}
+                        {% partial 'myaccount/cv/form-edit-cv' %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% partial 'modal-cv-saved' %}
+
+{% put scripts %}
+<script type="text/javascript">
+    $(document).on('click', '[data-increment]', function() {
+        var increment = $(this).attr('data-increment');
+        ++increment;
+        $(this).attr('data-increment', increment);
+        $.request('heroAccount::onAddItem',{
+            data: { key: increment },
+            update: { 'myaccount/cv/form-item-working-experience': '@#working-exps-container' },
+            afterUpdate : function(data){
+                refreshEle();
+            },
+        });
+
+        return false;
+    });
+
+    $( function() {
+        var changeProvince = (ele, type, isKeepVal) => {
+            var code = $(ele).val();
+            var typeLoc = (type == 2) ? 'domicile_' : '';
+            var city = $('[name="user['+typeLoc+'city_code]"]');
+            if (!isKeepVal) $('[name="user['+typeLoc+'city_code]"], [name="user['+typeLoc+'district_code]"], [name="user['+typeLoc+'village_code]"]').val('').trigger('change').attr('disabled', 'disabled');
+            if (code) city.removeAttr('disabled');
+            city.attr('data-request-data', "type: 'city', code: '" + code  + "'");
+        };
+
+        var changeCity = (ele, type, isKeepVal) => {
+            var code = $(ele).val();
+            var typeLoc = (type == 2) ? 'domicile_' : '';
+            var district = $('[name="user['+typeLoc+'district_code]"]');
+            if (!isKeepVal) $('[name="user['+typeLoc+'district_code]"], [name="user['+typeLoc+'village_code]"]').val('').trigger('change').attr('disabled', 'disabled');
+            if (code) district.removeAttr('disabled');
+            district.attr('data-request-data', "type: 'district', code: '" + code + "'" );
+        };
+        
+        var changeDistrict = (ele, type, isKeepVal) => {
+            var code = $(ele).val();
+            var typeLoc = (type == 2) ? 'domicile_' : '';
+            var village = $('[name="user['+typeLoc+'village_code]"]');
+            if (!isKeepVal) village.val('').trigger('change').attr('disabled', 'disabled');
+            if (code) village.removeAttr('disabled');
+            village.attr('data-request-data', "type: 'village', code: '" + code + "'" );
+        };
+
+        changeProvince('[name="user[province_code]"]', 1, 1);
+        changeCity('[name="user[city_code]"]', 1, 1);
+        changeDistrict('[name="user[district_code]"]', 1, 1);
+        changeProvince('[name="user[domicile_province_code]"]', 2, 1);
+        changeCity('[name="user[domicile_city_code]"]', 2, 1);
+        changeDistrict('[name="user[domicile_district_code]"]', 2, 1);
+
+        //
+        // On Change Permanent Address
+        //
+        $('[name="user[province_code]"]').on('change', function() {
+            changeProvince(this);
+        });
+
+        $('[name="user[city_code]"]').on('change', function() {
+            changeCity(this);
+        });
+
+        $('[name="user[district_code]"]').on('change', function() {
+            changeDistrict(this);
+        });
+
+        //
+        // On Change Domicile Address
+        //
+        $('[name="user[domicile_province_code]"]').on('change', function() {
+            changeProvince(this, 2);
+        });
+
+        $('[name="user[domicile_city_code]"]').on('change', function() {
+            changeCity(this, 2);
+        });
+
+        $('[name="user[domicile_district_code]"]').on('change', function() {
+            changeDistrict(this, 2);
+        });
+
+        var diffAddress = (ele) => {
+            var box = $('.curr_address_box'); 
+            if ($(ele).is(':checked')) {
+                box.removeClass('d-none');
+                box.find('input, textarea, select').attr('required', 'required');
+            } else {
+                box.addClass('d-none');
+                box.find('input, textarea, select').removeAttr('required');
+            }
+            refreshEle();
+        };
+        
+        diffAddress('[name="user[is_address_diff]"]');
+
+        $('[name="user[is_address_diff]"]').on('click', function() {
+            diffAddress(this);
+        });
+    });
+</script>
+{% endput %}

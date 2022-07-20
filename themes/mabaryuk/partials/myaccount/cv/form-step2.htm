@@ -1,0 +1,194 @@
+<div class="group-li mb-3">
+    <label for="">Permanent Address (based on ID Card)</label>
+    <textarea class="form-control form-th" rows="4" name="user[address]" required placeholder="Your Permanent Address">{{ user.address }}</textarea>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">Province (based on ID Card)</label>
+            <select name="user[province_code]" id=""
+                class="form-select form-th custom-select2"
+                data-handler="master::onSearchLocation"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+                required
+            >
+                <option value="">Choose your Province</option>
+                {% if user.province_code %}
+                    <option selected value="{{ user.province_code }}">{{ user.province.name }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">City (based on ID Card)</label>
+            <select name="user[city_code]" id=""
+                class="form-select form-th custom-select2"
+                {% if not user.city_code %} disabled {% endif %}
+                data-handler="master::onSearchLocation"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+                required
+            >
+                <option value="">Choose your City</option>
+                {% if user.city_code %}
+                    <option selected value="{{ user.city_code }}">{{ user.city.name }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">District (based on ID Card)</label>
+            <select name="user[district_code]" id=""
+                class="form-select form-th custom-select2"
+                {% if not user.district_code %} disabled {% endif %}
+                data-handler="master::onSearchLocation"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+                required
+            >
+                <option value="">Choose your District</option>
+                {% if user.district_code %}
+                    <option selected value="{{ user.district_code }}">{{ user.district.name }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">Village (based on ID Card)</label>
+            <select name="user[village_code]" id=""
+                class="form-select form-th custom-select2"
+                {% if not user.village_code %} disabled {% endif %}
+                data-handler="master::onSearchLocation"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+                required
+            >
+                <option value="">Choose your Village</option>
+                {% if user.village_code %}
+                    <option selected value="{{ user.village_code }}">{{ user.village.name }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+</div>
+<div class="group-li form-check mb-2">
+    <input class="form-check-input" type="checkbox" value="1" id="is_address_diff" name="user[is_address_diff]" {% if user.is_address_diff %} checked {% endif %}>
+    <label class="form-check-label" for="is_address_diff">
+        Is your current address different? 
+    </label>
+</div>
+<div class="group-li mb-3 curr_address_box d-none">
+    <label for="">Current Address (Domicile)</label>
+    <textarea class="form-control form-th" rows="4" name="user[domicile_address]" placeholder="Current Address">{{ user.domicile_address }}</textarea>
+</div>
+<div class="row curr_address_box d-none">
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">Province (Domicile)</label>
+            <select name="user[domicile_province_code]" id=""
+                class="form-select form-th custom-select2"
+                data-handler="master::onSearchLocation"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+            >
+                <option value="">Choose your Province</option>
+                {% if user.domicile_province_code %}
+                    <option selected value="{{ user.domicile_province_code }}">{{ user.domicile_province.name }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">City (Domicile)</label>
+            <select name="user[domicile_city_code]" id=""
+                class="form-select form-th custom-select2"
+                {% if not user.domicile_city_code %} disabled {% endif %}
+                data-handler="master::onSearchLocation"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+            >
+                <option value="">Choose your City</option>
+                {% if user.domicile_city_code %}
+                    <option selected value="{{ user.domicile_city_code }}">{{ user.domicile_city.name }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row curr_address_box d-none">
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">District (Domicile)</label>
+            <select name="user[domicile_district_code]" id=""
+                class="form-select form-th custom-select2"
+                {% if not user.domicile_district_code %} disabled {% endif %}
+                data-handler="master::onSearchLocation"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+            >
+                <option value="">Choose your District</option>
+                {% if user.domicile_district_code %}
+                    <option selected value="{{ user.domicile_district_code }}">{{ user.domicile_district.name }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">Village (Domicile)</label>
+            <select name="user[domicile_village_code]" id=""
+                class="form-select form-th custom-select2"
+                {% if not user.domicile_village_code %} disabled {% endif %}
+                data-handler="master::onSearchLocation"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+            >
+                <option value="">Choose your Village</option>
+                {% if user.domicile_village_code %}
+                    <option selected value="{{ user.domicile_village_code }}">{{ user.domicile_village.name }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+</div>
+<div class="group-li mb-3">
+    <label for="">NPWP</label>
+    <input type="text" name="user[npwp]" value="{{ user.npwp }}" class="form-control form-th" placeholder="Your NPWP Number">
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">Nationality</label>
+            <select name="user[ref_country_id]" id=""
+                class="form-select form-th custom-select2"
+                data-handler="master::onSearchNationality"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+                required
+            >
+                <option value="">Choose your Nationality</option>
+                {% if user.ref_country_id %}
+                    <option selected value="{{ user.ref_country_id }}">{{ user.ref_country.nationality }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">Status</label>
+            <select name="user[ref_marital_status_id]" required id="" class="form-select form-th custom-select2">
+                <option value="">Your marriage status</option>
+                {% for status in master.maritalStatuses %}
+                    <option value="{{ status.id }}" {% if user.ref_marital_status_id == status.id %} selected {% endif %}>{{ status.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>

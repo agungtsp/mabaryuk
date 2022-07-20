@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Location
+
+# Model Form Field configuration
+form: $/mabaryuk/master/models/location/fields.yaml
+
+# Model Class name
+modelClass: MabarYuk\Master\Models\Location
+
+# Default redirect location
+defaultRedirect: mabaryuk/master/locations
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: mabaryuk/master/locations/update/:id
+    redirectClose: mabaryuk/master/locations
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: mabaryuk/master/locations
+    redirectClose: mabaryuk/master/locations
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

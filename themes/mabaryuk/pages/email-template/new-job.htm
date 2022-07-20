@@ -1,0 +1,262 @@
+title = "Post New Job"
+url = "/email-template/new-job"
+layout = "default"
+
+[session]
+security = "user"
+allowedUserGroups[] = "admin_company"
+redirect = "home"
+
+[jobPostEdit]
+[master]
+==
+function onEnd()
+{
+    $this['btnSave'] = 'Post';
+}
+==
+<section class="dtl-acc dtl-pp sec-first">
+    <div class="container">
+        <div class="row my-5 justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <!-- Step 1 -->
+                <div class="deposit-form container-steps hide" id="step1">
+                    <div class="mb-5">
+                        <div class="status">
+                            <span>First Step!</span>
+                            <span>1/3</span>
+                        </div>
+                        <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="title-list mb-4">Job Detail</div>
+                    <div class="group-li mb-3">
+                        <label for="position">Position / Job Title</label>
+                        <input type="text" name="title" value="{{ job.title }}" required class="form-control form-th" placeholder="Senior Full-Stack Rails Developer">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="group-li form-check ps-0">
+                                <label for="">Minimum Working Experience & People Required</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="group-li mb-3">
+                                <input class="form-check-input" type="checkbox" value="true" id="fresh_graduate" name="fresh_graduate" {% if job.placement_id %} checked {% endif %}>
+                                <label class="form-check-label text-blue font-weight-500" for="fresh_graduate">
+                                    Fresh Graduate (0 Year Experience)
+                                </label>
+                                <input type="text" name="user[phone]" required value="{{ user.phone }}" class="form-control form-th mt-2" placeholder="People Required for This Working Experience">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="group-li mb-3">
+                                <input class="form-check-input" type="checkbox" value="true" id="junior" name="junior" {% if job.placement_id %} checked {% endif %}>
+                                <label class="form-check-label text-blue font-weight-500" for="junior">
+                                    Junior (1-3 Years Experience)
+                                </label>
+                                <input type="text" name="user[phone]" required value="{{ user.phone }}" class="form-control form-th mt-2" placeholder="People Required for This Working Experience">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="group-li mb-3">
+                                <input class="form-check-input" type="checkbox" value="true" id="middle" name="middle" {% if job.placement_id %} checked {% endif %}>
+                                <label class="form-check-label text-blue font-weight-500" for="middle">
+                                    Middle (3-5 Years Experience)
+                                </label>
+                                <input type="text" name="user[phone]" required value="{{ user.phone }}" class="form-control form-th mt-2" placeholder="People Required for This Working Experience">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="group-li mb-3">
+                                <input class="form-check-input" type="checkbox" value="true" id="senior" name="senior" {% if job.placement_id %} checked {% endif %}>
+                                <label class="form-check-label text-blue font-weight-500" for="senior">
+                                    Senior (More than 5 Years Experience)
+                                </label>
+                                <input type="text" name="user[phone]" required value="{{ user.phone }}" class="form-control form-th mt-2" placeholder="People Required for This Working Experience">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-li">
+                        <label for="">Job Qualification</label>
+                        <div id="qualifications-container" class="multiple-select-content">
+                            {% if not job.qualifications %}
+                                {% partial 'mycompany/job/form-item-qualification' %}
+                            {% else %}
+                                {% for item in job.qualifications %}
+                                {% partial 'mycompany/job/form-item-qualification' text=item.name value=item.id %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="text-end mb-1">
+                        <a href="#"
+                            data-request="jobPostEdit::onAddItem"
+                            data-request-update="'mycompany/job/form-item-qualification': '@#qualifications-container'"
+                            data-request-success="refreshEle()"
+                            class="forgot-pass">+add more Qualifications</a>
+                    </div>
+                    <div class="group-li mb-3">
+                        <label for="process">Process</label>
+                        <input type="number" name="cv_days_processed" value="{{ job.cv_days_processed }}" required class="form-control form-th" placeholder="How long do you process CV?">
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <a class="btn btn-outline-secondary w-100 py-2" href="#">Cancel</a>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="btn btn-primary w-100 py-2 btn-next" data-next="#step2">Next</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="deposit-form container-steps hide" id="step2">
+                    <div class="mb-5">
+                        <div class="status">
+                            <span>Getting Closer!</span>
+                            <span>2/3</span>
+                        </div>
+                        <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 33.333%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="title-list mb-2">Deposit</div>
+                    <p class="mb-4">You can use <b class="text-bluedark">"Priority Fee"</b> to boost your job post to the top of the list</p>
+                    <div class="group-li">
+                        <label for="position">Standard Fee
+                            <div class="l-tooltip l-tooltip-feather">
+                                <i data-feather="help-circle"></i>
+                                <span class="l-tooltiptext">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, repellat inventore non quia maxime maiores distinctio, esse, fugit, fugiat perspiciatis expedita doloribus dolor facere voluptatum recusandae quidem dolorum nostrum. Itaque.</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="group-li mb-3">
+                        <label for="" class="text-blue font-weight-500">Fresh Graduate (0 Year Experience)</label>
+                        <input type="number" name="" value="" required class="form-control form-th" placeholder="Fresh Graduate (0 Year Experience)">
+                    </div>
+                    <div class="group-li mb-3">
+                        <label for="" class="text-blue font-weight-500">Junior (1-3 Years Experience)</label>
+                        <input type="number" name="" value="" required class="form-control form-th" placeholder="Junior (1-3 Years Experience)">
+                    </div>
+                    <div class="group-li mb-3">
+                        <label for="" class="text-blue font-weight-500">Middle (3-5 Years Experience)</label>
+                        <input type="number" name="" value="" required class="form-control form-th" placeholder="Middle (3-5 Years Experience)">
+                    </div>
+                    <div class="group-li mb-3">
+                        <label for="position">Priority Fee (Optional)
+                            <div class="l-tooltip l-tooltip-feather">
+                                <i data-feather="help-circle"></i>
+                                <span class="l-tooltiptext">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, repellat inventore non quia maxime maiores distinctio, esse, fugit, fugiat perspiciatis expedita doloribus dolor facere voluptatum recusandae quidem dolorum nostrum. Itaque.</span>
+                            </div>
+                        </label>
+                        <div class="inner-dl multiple-select">
+                            <input type="text" name="" value="" required class="form-control form-th" placeholder="Priority Fee (Optional)">
+                            <a href="javascript:void(0);" class="btn btn-dl btn-plus"><i data-feather="plus-circle"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="group-li mb-3">
+                                <label for="">Payment Method</label>
+                                <div class="multiple-select-content">
+                                    <div class="inner-dl multiple-select qualification-container">
+                                    <select class="form-select form-th custom-select2 select-creatable"
+                                        data-placeholder="Payment Method"
+                                        >
+                                            <option selected value="0">Transfer</option>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="group-li mb-3">
+                                <label for="">Destination Bank</label>
+                                <div class="multiple-select-content">
+                                    <div class="inner-dl multiple-select qualification-container">
+                                    <select class="form-select form-th custom-select2 select-creatable"
+                                        data-placeholder="Payment Method"
+                                        >
+                                            <option selected value="0">Mandiri</option>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <a class="btn btn-outline-secondary w-100 py-2" href="#">Back</a>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="btn btn-primary w-100 py-2 btn-next" data-next="#step3">Next</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="deposit-form container-steps" id="step3">
+                    <div class="mb-5">
+                        <div class="status">
+                            <span>Final Step</span>
+                            <span>3/3</span>
+                        </div>
+                        <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 66.666%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="title-list mb-4">Payment Detail</div>
+                    <div class="card p-3 box-shadow">
+                        <div class="card-body">
+                            <div class="text-blue font-weight-700 fs-12">Job Title</div>
+                            <div class="text-bluedark font-weight-700">Senior Full-Stack Rails Developer</div>
+                            <hr>
+                            <div class="text-blue font-weight-700 fs-12">People Required</div>
+                            <div class="text-bluedark fs-15"><b class="font-weight-700 me-2">2</b> Fresh Graduate</div>
+                            <div class="text-bluedark fs-15"><b class="font-weight-700 me-2">2</b> Junior</div>
+                            <div class="text-bluedark fs-15"><b class="font-weight-700 me-2">1</b> Senior</div>
+                            <hr>
+                            <div class="text-blue font-weight-700 fs-12">
+                                Standard Fee
+                                <div class="l-tooltip l-tooltip-feather">
+                                    <i data-feather="help-circle"></i>
+                                    <span class="l-tooltiptext">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, repellat inventore non quia maxime maiores distinctio, esse, fugit, fugiat perspiciatis expedita doloribus dolor facere voluptatum recusandae quidem dolorum nostrum. Itaque.</span>
+                                </div>
+                            </div>
+                            <div class="text-bluedark font-weight-700">IDR 12.000.000</div>
+                            <div class="fs-12">*Money back guarantee if you don't succeed in getting talent</div>
+                            <hr>
+                            <div class="text-blue font-weight-700 fs-12">
+                                Priority Fee
+                                <div class="l-tooltip l-tooltip-feather">
+                                    <i data-feather="help-circle"></i>
+                                    <span class="l-tooltiptext">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, repellat inventore non quia maxime maiores distinctio, esse, fugit, fugiat perspiciatis expedita doloribus dolor facere voluptatum recusandae quidem dolorum nostrum. Itaque.</span>
+                                </div>
+                            </div>
+                            <div class="text-bluedark font-weight-700">IDR 300.000</div>
+                            <div class="fs-12">*Your job posting will be on the top list based on highest priority cost and get more talent</div>
+                            <hr>
+                            <div class="text-blue font-weight-700 fs-12">Destination Bank</div>
+                            <div class="text-bluedark">
+                                <b>Bank Mandiri</b> <span class="d-block fs-14">Agung TSP <br>1270005992886</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <a class="btn btn-outline-secondary w-100 py-2" href="#">Back</a>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="btn btn-yellow w-100 py-2 btn-next">Finish</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal Add Work Culture -->
+{% partial 'mycompany/job/modal-job-posted' %}

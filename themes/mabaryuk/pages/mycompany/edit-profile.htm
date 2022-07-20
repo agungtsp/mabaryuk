@@ -1,0 +1,235 @@
+title = "My Profile"
+url = "/mycompany/edit-profile"
+layout = "default"
+
+[companyAccount]
+requirePassword = true
+[master]
+[session]
+security = "user"
+allowedUserGroups[] = "admin_company"
+redirect = "home"
+==
+<section class="dtl-acc dtl-pp">
+    <form action="" method="POST" enctype="multipart/form-data" id="form-profile">
+        <div class="header-full">
+            <img src="{{ 'assets/images/bg-talents.jpg'|theme }}" alt="" class="bg-header">
+            <div class="change-photo">
+                <div class="preview-zone {% if not company.banner %} hide {% endif %}">
+                    <div class="box box-solid">
+                        <div class="box-body">
+                            <img src="{{ company.banner.getPath() }}" alt="Avatar" />
+                        </div>
+                    </div>
+                </div>
+                <div class="dropzone-wrapper">
+                    <div class="dropzone-desc">
+                    <span>Upload New Header</span>
+                    <p>Choose an image file or drag it here.</p>
+                    </div>
+                    <input type="file" name="banner" class="dropzone" accept="image/*">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row my-5 justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <div class="text-center">
+                        <div class="change-pp">
+                            <div class="preview-zone {% if not company.avatar %} hide {% endif %} ">
+                                <div class="box box-solid">
+                                    <div class="box-body">
+                                        <img src="{{company.avatar.getThumb(100, 100, {'quality': 80}) }}" alt="Avatar" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropzone-wrapper">
+                                <div class="dropzone-desc">
+                                    <span><i data-feather="edit"></i> {{ 'Edit Photo</span>
+                                </div>
+                                <input type="file" name="avatar" class="dropzone" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="email">Admin Name</label> 
+                                    <input type="text" name="admin[name]" required class="form-control form-th" placeholder="Admin Name" value="{{ user.name }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="email">Admin Email</label> 
+                                    <input type="email" name="admin[email]" required class="form-control form-th" placeholder="Admin Email" value="{{ user.email }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group-li">
+                            <label for="password">Password</label> 
+                            <input type="password" name="password_current" required class="form-control form-th" placeholder="Password">
+                        </div>
+                        <div class="text-end mb-1">
+                            <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#change_password" class="forgot-pass">change password</a>
+                        </div>
+                        <hr>
+                        <div class="group-li mb-3">
+                            <label for="name">Company's Name</label> 
+                            <input type="text" name="name" required class="form-control form-th" placeholder="Your Company's Name" value="{{ company.name }}">
+                        </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <div class="group-li mb-3">
+                                    <label for="ref_country_id">Country</label> 
+                                    <select
+                                        name="ref_country_id"
+                                        class="form-select form-th mb-3 custom-select2"
+                                        placeholder="Choose Country"
+                                        onchange="loadProvince(this)"
+                                        required
+                                        >
+                                        <option value="">Choose Country</option>
+                                        {% for country in master.countries %}
+                                            <option value="{{ country.id }}" {% if company.ref_country_id == country.id %} selected {% endif %}>{{ country.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="group-li mb-3" id="container_province">
+                                    <label for="province_code">City</label> 
+                                    <select
+                                        name="province_code"
+                                        class="form-select form-th mb-3 custom-select2"
+                                        >
+                                        <option value="">Choose City</option>
+                                        {% for province in master.provinces %}
+                                            <option value="{{ province.code }}" {% if company.province_code == province.code %} selected {% endif %}>{{ province.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group-li">
+                            <label for="about">About Your Company</label> 
+                            <textarea class="form-control form-th input-count" data-count="#about_count" rows="4" name="about" id="input_about" placeholder="Tell us about your Company" maxlength="240">{{ company.about }}</textarea>
+                        </div>
+                        <div class="text-end mb-1">
+                            <span class="forgot-pass" id="about_count">{{ company.about|length }}/240</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="phone">Phone</label> 
+                                    <label class="form-date form-phone">
+                                        <span>+62</span>
+                                        <input type="text" name="phone" required class="form-control form-th" placeholder="Phone" value="{{ company.phone }}">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="phone">Other Phone Number</label> 
+                                    <label class="form-date form-phone">
+                                        <span>+62</span>
+                                        <input type="text" name="phone2" class="form-control form-th" placeholder="Phone" value="{{ company.phone2 }}">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group-li mb-3">
+                            <label for="address">Address</label> 
+                            <textarea class="form-control form-th" rows="4" required name="address" placeholder="Your Company's Address" maxlength="225">{{ company.address }}</textarea>
+                        </div>
+                        <div class="group-li mb-3">
+                            <label for="">Industry</label>
+                            <select
+                                name="ref_industry_id" 
+                                id="ref_industry_id"
+                                class="form-select form-th custom-select2">
+                                <option value>Your Company's Industry Type</option>
+                                {% for industry in master.industries() %}
+                                <option value="{{ industry.id }}" {% if company.ref_industry_id == industry.id %} selected {% endif %}>{{ industry.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="group-li">
+                            <label for="benefits">Benefits</label> 
+                            <div id="benefits-container" class="multiple-select-content">
+                                {% if not company.benefits %}
+                                    {% partial 'mycompany/form-item-benefit' %}
+                                {% else %}
+                                    {% for item in company.benefits %}
+                                    {% partial 'mycompany/form-item-benefit' text=item.name value=item.id %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="text-end mb-1">
+                            <a href="#"
+                                data-request="companyAccount::onAddItem"
+                                data-request-update="'mycompany/form-item-benefit': '@#benefits-container'"
+                                data-request-success="refreshEle()"
+                                class="forgot-pass">+add more benefit</a>
+                        </div>
+                        <div class="group-li">
+                            <label for="workCulture">Work Culture</label>
+                            <div id="cultures-container" class="multiple-select-content">
+                                {% if not company.cultures %}
+                                    {% partial 'mycompany/form-item-culture' %}
+                                {% else %}
+                                    {% for item in company.cultures %}
+                                    {% partial 'mycompany/form-item-culture' text=item.name value=item.id %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="text-end mb-5">
+                            <a href="#"
+                                data-request="companyAccount::onAddItem"
+                                data-request-update="'mycompany/form-item-culture': '@#cultures-container'"
+                                data-request-success="refreshEle()"
+                                class="forgot-pass">+add more culture</a>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a href="{{ url('mycompany/profile') }}" class="btn btn-outline-secondary w-100 py-2">Cancel</a>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-yellow w-100 py-2"
+                                    data-request="companyAccount::onUpdate" 
+                                    data-request-form="#form-profile"
+                                    data-request-files
+                                    data-request-flash
+                                    data-attach-loading
+                                    data-browser-validate
+                                >Save</button>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+<!-- Modal Change Password -->
+{% partial 'mycompany/modal-change-password' %}
+
+<!-- Modal Password Change -->
+{% partial 'modal-password-change' %}
+
+<!-- Add Scripts -->
+{% put scripts %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        loadProvince($('[name=ref_country_id]'));
+    });
+
+    loadProvince = (ele) => {
+        $('#container_province').addClass('hide');
+        if (ele && $(ele).val() == 101) { //indonesia
+            $('#container_province').removeClass('hide');
+        }
+    }
+</script>
+{% endput %}

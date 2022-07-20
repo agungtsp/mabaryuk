@@ -1,0 +1,15 @@
+<div class="modal fade" id="create_cv_modal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="form-login p-3 text-center">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <img src="{{ 'assets/images/create-cv.jpg'|theme }}" alt="" width="85" class="mt-4">
+            <h2 class="my-3">Please Create a CV</h2>
+            <p>We need your CV to confirm if you're a real hero or not</p>
+            <a class="btn btn-yellow w-100" href="{{ url('myaccount/update-cv') }}">Create My CV</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

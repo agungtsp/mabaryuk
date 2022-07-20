@@ -1,0 +1,112 @@
+title = "Edit Profile"
+url = "/myaccount/edit-profile"
+layout = "default"
+
+[heroAccount]
+requirePassword = true
+[session]
+security = "user"
+allowedUserGroups[] = "hero"
+redirect = "home"
+==
+<section class="dtl-acc">
+    <form action="" method="POST" enctype="multipart/form-data" id="form-profile">
+        <div class="header-full">
+            <img src="{{ 'assets/images/bg-talents.jpg'|theme }}" alt="" class="bg-header">
+            <div class="change-photo">
+                <div class="preview-zone {% if not user.banner %} hide {% endif %}">
+                    <div class="box box-solid">
+                        <div class="box-body">
+                            <img src="{{ user.banner.getPath() }}" alt="Avatar" />
+                        </div>
+                    </div>
+                </div>
+                <div class="dropzone-wrapper">
+                    <div class="dropzone-desc">
+                    <span>Upload New Header</span>
+                    <p>Choose an image file or drag it here.</p>
+                    </div>
+                    <input type="file" name="banner" class="dropzone" accept="image/*">
+                </div>
+            </div>
+            </div> 
+        </div>
+        <div class="container">
+            <div class="row my-5 justify-content-md-center">
+                <div class="col-md-10 col-lg-8">
+                    <div class="text-center">
+                        <div class="change-pp">
+                            <div class="preview-zone {% if not user.avatar %} hide {% endif %} ">
+                                <div class="box box-solid">
+                                    <div class="box-body">
+                                        <img src="{{ user.avatar.getThumb(100, 100, {'quality': 80}) }}" alt="Avatar" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropzone-wrapper">
+                                <div class="dropzone-desc">
+                                    <span><i data-feather="edit"></i> {{ 'Edit Photo</span>
+                                </div>
+                                <input type="file" name="avatar" class="dropzone" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="group-li mb-3">
+                            <label for="name">Name</label> 
+                            <input type="text" name="name" value="{{ user.name }}" autocomplete="off" class="form-control form-th" placeholder="{{ 'Name" required>
+                        </div>
+                        <div class="group-li">
+                            <label for="password">Password</label> 
+                            <input type="password" name="password_current" class="form-control form-th" placeholder="{{ 'Password" required>
+                        </div>
+                        <div class="text-end text-lowercase">
+                            <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#change_password" class="forgot-pass">change password</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="group-li mb-3">
+                                    <label for="email">Email</label> 
+                                    <input type="text" name="email" value="{{ user.email }}" autocomplete="off" class="form-control form-th" placeholder="{{ 'Email" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="group-li mb-3">
+                                    <label for="phone">Phone</label> 
+                                    <input type="text" name="phone" value="{{ user.phone }}" autocomplete="off" class="form-control form-th" placeholder="{{ 'Phone" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5 mt-3">
+                            <div class="col">
+                                <a class="btn btn-outline-secondary w-100 py-2" href="{{ url('myaccount/profile') }}">Cancel</a>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-yellow w-100 py-2"
+                                    data-request="heroAccount::onUpdate" 
+                                    data-request-form="#form-profile"
+                                    data-request-files
+                                    data-request-flash
+                                    data-attach-loading
+                                    data-browser-validate
+                                >Save</button>
+                            </div>
+                        </div>
+                        {% if user.is_profile_complete == false %}
+                        <div class="row text-start mt-4">
+                            <div class="col-12">
+                                <h4 class="text-darkblue mb-3 fs-16-m"><b>Your profile hasn't complete <i class="text-red" data-feather="alert-circle"></i></b></h4>
+                                <a href="{{ url('myaccount/update-cv') }}" class="btn btn-yellow py-2 px-5">Complete My Profile</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+<!-- Modal Change Password -->
+{% partial 'myaccount/modal-change-password' %}
+
+<!-- Modal Password Change -->
+{% partial 'modal-password-change' %}

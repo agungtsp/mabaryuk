@@ -1,0 +1,82 @@
+<div class="filter-left">
+    <div class="title-list">Filter</div>
+    <form action="">
+        <div class="f-search">
+            <div class="input-group mb-3">
+                <span class="input-group-text bg-white"><i class="fas fa-search"></i></span>
+                <input type="text" name="keyword" value="{{ get('keyword') }}" class="form-control border-start-0" placeholder="Search Job">
+            </div>
+            <a class="btn btn-filter-mb" onclick="myFunction()"><i data-feather="sliders"></i></a>
+        </div>
+        <div id="desc_filter">
+            <div class="accordion mt-5" id="accordionFilter">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsFilter-headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsFilter-collapseOne" aria-expanded="true" aria-controls="panelsFilter-collapseOne">
+                        Status
+                        </button>
+                    </h2>
+                    <div id="panelsFilter-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsFilter-headingOne">
+                        <div class="accordion-body">
+                            <div class="form-check mb-3">
+                                <input class="form-check-input check-all" data-siblings=".check-location" {% if get('statuses')|length == 5 %} checked {% endif %} type="checkbox" value="" id="all_location">
+                                <label class="form-check-label" for="all_location">
+                                All Status
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input check-location" name="statuses[]" {% if 'norespond' in get('statuses') %} checked {% endif %} type="checkbox" value="norespond" id="">
+                                <label class="form-check-label" for="">
+                                No Respond
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input check-location" name="statuses[]" {% if 'seen' in get('statuses') %} checked {% endif %} type="checkbox" value="seen" id="">
+                                <label class="form-check-label" for="">
+                                Seen by The Company
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input check-location" name="statuses[]" {% if 'interview' in get('statuses') %} checked {% endif %} type="checkbox" value="interview" id="">
+                                <label class="form-check-label" for="">
+                                Interview
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input check-location" name="statuses[]" {% if 'failed' in get('statuses') %} checked {% endif %} type="checkbox" value="failed" id="">
+                                <label class="form-check-label" for="">
+                                Failed
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input check-location" name="statuses[]" {% if 'accepted' in get('statuses') %} checked {% endif %} type="checkbox" value="accepted" id="">
+                                <label class="form-check-label" for="">
+                                Accepted
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-btn-filter">
+                <div class="col">
+                    <button class="btn btn-outline-secondary w-100 reset-form btn-sm fs-12 py-2" type="button">Reset</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary w-100 btn-sm fs-12 py-2">Apply Filter</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("desc_filter");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
+</script>

@@ -1,0 +1,219 @@
+{% if jobs.total == 0 and filters.keyword %}
+<div class="title-list-search">Result for <strong>'{{ filters.keyword }}'</strong> is not found</div>
+{% endif %}
+
+{% if status == 'published' %}
+    {% for job in jobs %}
+        <div class="card list-prof mb-3 {% if job.billing.ref_billing_status_id == 1 %} lp-waiting {% endif %}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="pr-prossstat text-blue">Ongoing - {{ job.total_positions }} Positions Required</div>
+                        <a href="{{ url('mycompany/job/' ~ job.id ~ '/view') }}"><div class="pr-name">{{ job.title }}</div></a>
+                        <div class="d-flex align-items-center">
+                            <div class="date">Posted on {{ job.status_updated_at|date('j F Y') }}</div>
+                            {% if job.billing.ref_billing_status_id == 3 %}
+                            <div class="stat-job paid"><i data-feather="check-circle"></i> <span>Paid</span></div>
+                            {% elseif job.billing.ref_billing_status_id == 2 %}
+                            <div class="stat-job processed"><i data-feather="clock"></i> <span>Payment Processed</span></div>
+                            {% else %}
+                            <div class="stat-job waiting"><i data-feather="alert-circle"></i> <span>Waiting for Payment</span></div>
+                            {% endif %}
+                        </div>
+                        <div class="act-list">
+                            <div>
+                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                            </div>
+                            <div>
+                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-end position-relative">
+                        <div class="action mt-5 pt-3">
+                            <div class="dot-nav">
+                                <i data-feather="more-horizontal"></i>
+                                <div class="subdot-nav">
+                                    <a href="#"
+                                        data-request="jobPostAction::onUnpublish"
+                                        data-request-success="$('#nav-unpublished-tab').tab('show').click();refreshTabs();"
+                                        data-request-data="id: {{ job.id }}"
+                                        data-attach-loading
+                                    ><img src="{{ 'assets/images/Unpublish.svg'|theme }}" alt=""> Unpublish Job</a>
+                                </div>
+                            </div>
+                            {% if job.billing.ref_billing_status_id == 1 %}
+                            <a href="{{ url('mycompany/billings/' ~ job.billing.invoice_number ~ '/payment-confirmation') }}" class="btn btn-outline-dark w-auto me-2">Confirm Payment</a>
+                            {% endif %}
+                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow w-auto">View All Candidates</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% elseif status == 'draft' %}
+    {% for job in jobs %}
+        <div class="card list-prof mb-3 {% if job.billing.ref_billing_status_id == 1 %} lp-waiting {% endif %}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6 pt-2">
+                        <div class="pr-prossstat text-blue">{{ job.total_positions }} Positions Required</div>
+                        <a href="{{ url('mycompany/job/' ~ job.id ~ '/view') }}"><div class="pr-name">{{ job.title }}</div></a>
+                        <div class="d-flex align-items-center">
+                            <div class="date">Drafted on {{ job.status_updated_at|date('j F Y') }}</div>
+                            {% if job.billing.ref_billing_status_id == 3 %}
+                            <div class="stat-job paid"><i data-feather="check-circle"></i> <span>Paid</span></div>
+                            {% elseif job.billing.ref_billing_status_id == 2 %}
+                            <div class="stat-job processed"><i data-feather="clock"></i> <span>Payment Processed</span></div>
+                            {% else %}
+                            <div class="stat-job waiting"><i data-feather="alert-circle"></i> <span>Waiting for Payment</span></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-end position-relative">
+                        <div class="action mt-5">
+                            <div class="dot-nav">
+                                <i data-feather="more-horizontal"></i>
+                                <div class="subdot-nav">
+                                    <a href="{{ url('mycompany/job/' ~ job.id ~ '/edit') }}" class="pb-0"><i data-feather="edit"></i> Edit This Job</a>
+                                    <a href="#" class="text-danger"
+                                        data-request="jobPostAction::onCancel"
+                                        data-request-success="$('#nav-draft-tab').click();refreshTabs();"
+                                        data-request-data="id: {{ job.id }}"
+                                        data-attach-loading
+                                    ><i data-feather="x-circle"></i> Cancel Job</a>
+                                </div>
+                            </div>
+                            {% if job.billing.ref_billing_status_id == 1 %}
+                            <a href="{{ url('mycompany/billings/' ~ job.billing.invoice_number ~ '/payment-confirmation') }}" class="btn btn-outline-dark w-auto me-2">Confirm Payment</a>
+                            {% endif %}
+                            <a href="#" class="btn btn-dark w-auto" data-bs-toggle="modal" data-bs-target="#modal_attention-{{ job.id }}">Post Job</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Attention -->
+        {% partial 'mycompany/job/modal-attention' id=job.id %}
+    {% endfor %}
+
+{% elseif status == 'unpublished' %}
+    {% for job in jobs %}
+        <div class="card list-prof mb-3 {% if job.ref_job_status_id == 7 %} failed {% else %} lp-unpublish {% endif %}">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="pr-prossstat text-blue">{% if job.ref_job_status_id == 7 %} Banned {% else %} Job Unpublished {% endif %}</div>
+                        <a href="{{ url('mycompany/job/' ~ job.id ~ '/view') }}"><div class="pr-name text-grey">{{ job.title }}</div></a>
+                        <div class="d-flex align-items-center">
+                            <div class="date">Unpublished on {{ job.status_updated_at|date('j F Y') }}</div>
+                            {% if job.billing.ref_billing_status_id == 3 %}
+                            <div class="stat-job paid"><i data-feather="check-circle"></i> <span>Paid</span></div>
+                            {% elseif job.billing.ref_billing_status_id == 2 %}
+                            <div class="stat-job processed"><i data-feather="clock"></i> <span>Payment Processed</span></div>
+                            {% else %}
+                            <div class="stat-job waiting"><i data-feather="alert-circle"></i> <span>Waiting for Payment</span></div>
+                            {% endif %}
+                        </div>
+                        <div class="act-list">
+                            <div>
+                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                            </div>
+                            <div>
+                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-end position-relative">
+                        <div class="action mt-5 pt-3">
+                            <div class="dot-nav">
+                                <i data-feather="more-horizontal"></i>
+                                <div class="subdot-nav">
+                                    <a
+                                        href="#"
+                                        class="text-danger"
+                                        data-request="jobPostAction::onCancel"
+                                        data-request-success="refreshTabs();"
+                                        data-request-data="id: {{ job.id }}"
+                                        data-attach-loading
+                                    ><i data-feather="x-circle"></i> Cancel Job</a>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-outline-dark w-auto me-2" data-bs-toggle="modal" data-bs-target="#modal_re_publish-{{ job.id }}">Re-Publish</a>
+                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow w-auto">View All Candidates</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% partial 'mycompany/job/modal-re-publish' id=job.id %}
+    {% endfor %}
+
+{% elseif status == 'success' %}
+    {% for job in jobs %}
+    <div class="card list-prof mb-3 lp-success">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="pr-prossstat text-blue">Done - {{ job.total_positions }} Positions Required</div>
+                    <a href="{{ url('mycompany/job/' ~ job.id ~ '/view') }}"><div class="pr-name">{{ job.title }}</div></a>
+                    <div class="date">Posted on {{ job.status_updated_at|date('j F Y') }}</div>
+                    <div class="act-list">
+                        <div>
+                            <span>{{ job.applicants.count|default(0) }}</span> Applied
+                        </div>
+                        <div>
+                            <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 text-end position-relative">
+                    <div class="grid-item-user main-user">
+                        <div class="items-user">
+                            {% for candidate in job.applicants|slice(0, 10) %}
+                            <div class="item-user">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv-{{ candidate.user.id }}">
+                                <div class="thumb-iu">
+                                    {% if candidate.user.avatar %}
+                                    <img src="{{ candidate.user.avatar.getThumb(135, 135, {'quality': 80}) }}" alt="">
+                                    {% else %}
+                                    <img src="{{ 'assets/images/user.png'|theme }}" alt="">
+                                    {% endif %}
+                                </div>
+                                <span>{{ candidate.name }}</span>
+                                </a>
+                            </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        {% for candidate in unique_users %}
+            <!-- Modal CV -->
+            {% partial 'mycompany/job/modal-cv' candidate=candidate %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+<form
+    id="form-pagination-{{ status }}"
+    data-request="jobPostList::onLoad"
+    data-request-form="#form-filter, #form-pagination-{{ status }}"
+    data-request-update="'mycompany/job/items': '#nav-{{ status }}'"
+    data-request-success="refreshTabs();"
+>
+    <input type="hidden" name="page" value="{{ page }}">
+    <div class="text-center mt-5">
+        <nav class="d-inline-block">
+            {% partial 'pagination-ajax' records=jobs %}
+        </nav>
+    </div>
+</form>

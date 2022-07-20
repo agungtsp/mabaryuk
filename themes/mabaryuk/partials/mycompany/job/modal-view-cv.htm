@@ -1,0 +1,38 @@
+<div class="modal fade modal-view-cv" id="view_cv_modal-{{ row.id }}" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="form-login p-3">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="d-inline-flex align-items-center mb-5">
+              <div class="thumb-jobs">
+                  <img src="{{ 'assets/images/lock.png'|theme }}" alt="">
+              </div>
+              <div>
+                  <div class="pr-name">(Name Hidden) <img src="{{ 'assets/images/lock.png'|theme }}" alt=""></div>
+                  <div class="date">{{ row.user.gender_name }}, {{ row.user.age }} Years Old</div>
+                  <div class="date text-blue">{{ row.user.permanent_location }}</div>
+              </div>
+          </div>
+          <p class="text-darkblue mb-0"><b>Formal Education</b></p>
+          {% for edu in row.user.educations %}
+          <p>{{ edu.institution }} (GPA {{ edu.gpa }})</p>
+          {% endfor %}
+          <p class="text-darkblue mb-2"><b>Skillsets</b></p>
+          <ul class="fs-14">
+            {% for skill in row.user.skills %}
+            <li>{{ skill.ref.name }}</li>
+            {% endfor %}
+          </ul>
+          <p class="text-darkblue mb-2"><b>Languages</b></p>
+          <ul class="fs-14">
+            {% for lang in row.user.lang_skills %}
+            <li>{{ lang.ref.name }}</li>
+            {% endfor %}
+          </ul>
+          <a href="#" class="btn btn-yellow d-inline-flex align-items-center mt-5" data-bs-target="#complete_unlock" data-bs-toggle="modal">Unlock This Candidate <img src="{{ 'assets/images/lock.png'|theme }}" alt="" class="ms-2"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

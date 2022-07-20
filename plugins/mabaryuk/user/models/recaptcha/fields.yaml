@@ -1,0 +1,15 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    is_enable:
+        label: "Enable Recaptcha ?"
+        type: switch
+    site_key:
+        label: "Recpatcha V3 Site Key"
+        type: text
+    secret_key:
+        label: "Recpatcha V3 Secret Key"
+        type: text
+

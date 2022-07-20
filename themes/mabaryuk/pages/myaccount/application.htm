@@ -1,0 +1,41 @@
+title = "My Profile"
+url = "/myaccount/application"
+layout = "default"
+
+[session]
+security = "user"
+allowedUserGroups[] = "hero"
+redirect = "home"
+
+[userApplication]
+==
+<section class="bg-whitelight sec-first pb-0-m application-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="content-jobs jobs-page mt-0">
+                    <div class="row">
+                        <div class="col-lg-3 pe-5 pe-md-12">
+                            {% partial 'myaccount/application/filter' %}
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="title-list">Job Applied</div>
+                            {% if applications.total == 0 %}
+                            <div class="title-list-search">Data Not Found</div>
+                            <!-- <div class="title-list-search hide">Showing Result for <strong>'Design'</strong></div> -->
+                            {% endif %}
+                            <div class="accordion" id="accordionJobs">
+                              {% partial 'myaccount/application/items' applications=applications %}
+                            </div>
+                            <div class="text-center mt-5">
+                                <nav class="d-inline-block">
+                                  {% partial 'pagination' records=applications %}
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

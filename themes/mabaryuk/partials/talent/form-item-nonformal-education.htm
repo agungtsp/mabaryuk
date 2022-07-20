@@ -1,0 +1,25 @@
+<div class="nonformal-education-items">
+    <input type="hidden" name="nonformal_educations[id][]" value="{{ nonformal.id }}">
+    <div class="group-li outer-bdl">
+        <button type="button" class="btn btn-dl btn-remove" data-min="1" data-container=".nonformal-education-items"><i data-feather="trash-2"></i></button>
+        <label for="">Non Formal Education</label> 
+        <input type="text" name="nonformal_educations[name][]" value="{{ nonformal.name }}" class="form-control form-th" placeholder="Your non-formal education">
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="group-li">
+                <label for="">Institution</label> 
+                <input type="text" name="nonformal_educations[institution][]" value="{{ nonformal.institution }}" class="form-control form-th" placeholder="Institution">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li">
+                <label for="">Period</label>
+                <label class="form-date">
+                    <i data-feather="calendar"></i>
+                    <input type="text" name="nonformal_educations[period][]" value="{% if nonformal.start_period %}{{ nonformal.start_period|date('d/m/Y') }} - {{ nonformal.end_period|date('d/m/Y') }}{% endif %}" class="form-control form-th mydaterangepicker" placeholder="Period">
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
