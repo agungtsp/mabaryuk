@@ -1,0 +1,143 @@
+title = "Home"
+url = "/"
+layout = "default"
+
+[jobAction]
+[topJob]
+==
+use MabarYuk\User\Models\Recaptcha as RecaptchaSetting;
+function onStart() {
+    $this['recaptcha_is_enable'] = ((bool) RecaptchaSetting::get('is_enable', false));
+    $this['site_key'] = RecaptchaSetting::get('site_key', '');
+}
+==
+<header class="banner-index">
+  <div class="container px-4 text-center text-white">
+    <img src="{{ 'assets/images/logo-banner.png'|theme }}" alt="" class="mb-2">
+    <p class="lead">Participate and Get</p>
+    <h1 class="fw-bolder">Up to Rp 7 Million Cash</h1>
+    <a class="btn btn-lg btn-yellow w-auto px-4 mt-5" href="#work">How it Works?</a>
+  </div>
+  <img src="{{ 'assets/images/caracter.png'|theme }}" alt="" class="caracter">
+  <img src="{{ 'assets/images/cloud.png'|theme }}" alt="" class="cloud">
+  <img src="{{ 'assets/images/cloud-right.png'|theme }}" alt="" class="cloud-right">
+</header>
+
+<div class="line-one">
+    <div></div>
+</div>
+
+<!-- What Is -->
+<section id="whatis_mabaryuk" class="what-is">
+    <div class="container">
+        <div class="row">
+            <div class="col-auto pe-5 d-flex align-items-center justify-content-center">
+                <h1>WHAT IS<br>TALENT HERO?</h1>
+            </div>
+            <div class="col ps-4 d-flex align-items-center justify-content-center">
+                <p>Talent Hero is a Top Talent Hiring Platform based on recommendations of great talents alike through their network of friends & colleagues.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="line-two">
+    <div></div>
+</div>
+
+<!-- Work section-->
+<section id="work" class="bg-black text-white">
+    <div class="container px-4">
+        <div class="row gx-4 justify-content-center">
+            <div class="col-auto d-flex align-items-center justify-content-center">
+                <img src="{{ 'assets/images/work.png'|theme }}" alt="">
+            </div>
+            <div class="col">
+                <div class="d-flex h-100 w-100 align-items-center justify-content-center">
+                    <div class="work-desc">
+                        <h1 class="mb-5">How Does It Work?</h1>
+                        <ol>
+                            <li>Recommend a talent based on the requirements of the job openings</li>
+                            <li>We will conduct an assessment to see whether or not the talent meets the requirements</li>
+                            <li>If the talent meets the requirements, they will undergo several tests</li>
+                            <li>Talents who passed all the tests will move forward to the interview process</li>
+                            <li>You will receive your rewards once the talent is hired</li>
+                        </ol>
+                        <a class="btn btn-lg btn-yellow w-auto px-4 mt-5" href="#work">Become a Talent Hero Now!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="line-three">
+    <div></div>
+</div>
+
+<!-- Talent section-->
+<section id="talent" class="bg-blue pb-0">
+    <div class="container px-4">
+        <div class="row gx-4 justify-content-center">
+            <div class="col pe-5">
+                <div class="acc-talents">
+                    <img src="{{ 'assets/images/arrow.svg'|theme }}" alt="" class="arrow">
+                    {% if top_jobs.count > 0 %}
+                    <div class="accordion" id="accordionTalents">
+                      {% for item in top_jobs %}
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading-{{ item.id }}">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ item.id }}" aria-expanded="true" aria-controls="collapse-{{ item.id }}">
+                            {{ item.title }}
+                          </button>
+                        </h2>
+                        <div id="collapse-{{ item.id }}" class="accordion-collapse collapse {% if loop.first %} show {% endif %}" aria-labelledby="heading-{{ item.id }}" data-bs-parent="#accordionTalents">
+                          <div class="accordion-body">
+                            {{ item.description|raw }}
+                            <!-- <ul>
+                                {% for q in item.qualifications %}
+                                <li>{{ q.name }}</li>
+                                {% endfor %}
+                            </ul> -->
+                            {% if not user or (user and user.is_hero) %}
+                            <div class="text-end">
+                                {% if user and not user.is_profile_complete %}
+                                <a href="#" class="btn btn-yellow w-auto" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#create_cv_modal" onclick="setCookie('job_id_refer', '{{ item.id }}', 1)">Send to my friend</a>
+                                {% else %}
+                                <a href="#" class="btn btn-yellow w-auto" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#refer_friend_modal-{{ item.id }}">Send to my friend</a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Modal Jobs -->
+                      <div id="refer-friend-{{ item.id }}">
+                        {% partial 'jobs/modal-refer-friend' talents=item.applicants job=item %}
+                      </div>
+                      {% partial 'jobs/modal-refer-answer' talents=item.applicants job=item %}
+
+                      {% endfor %}
+                    </div>
+                    <a href="{{ url('/jobs') }}" class="btn btn-yellow-circle w-100 text-start d-flex">See More <span class="arrow-button"></span></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-auto ps-5 text-white">
+                <div class="d-flex align-items-center justify-content-end w-100 h-100 flex-d-column position-relative">
+                    <div class="talents">
+                        <h1>We Need These <br>Talents</h1>
+                        <img src="{{ 'assets/images/talents.svg'|theme }}" alt="" class="mt-5">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if recaptcha_is_enable and site_key %}
+    {% put scripts %}
+        <script src="{{ 'assets/modules/user/recaptcha.js'|theme }}"></script>
+    {% endput %}
+{% endif %}

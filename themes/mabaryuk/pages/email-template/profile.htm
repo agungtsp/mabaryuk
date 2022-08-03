@@ -1,0 +1,554 @@
+title = "My Profile"
+url = "/email-template/profile"
+layout = "default"
+
+[session]
+security = "user"
+allowedUserGroups[] = "admin_company"
+redirect = "home"
+
+[companyAccount]
+[jobPostList]
+[jobPostAction]
+[master]
+==
+<section class="dtl-acc">
+    <div class="header-full minh-auto-m">
+        <img src="{{ 'assets/images/bg-talents.jpg'|theme }}" alt="" class="bg-header">
+        <div class="f-desc pr-m">
+            <div class="container">
+                <div class="header-dtl">
+                    <div class="list-jobs mb-0">
+                        <div class="thumbnail thumb-profile">
+                            <img src="{{ 'assets/images/user.png'|theme }}" alt="">
+                        </div>
+
+                        <div class="d-flex w-100">
+                            <div class="desc w-100">
+                                <div class="w-100">
+                                    <div class="fullname">{{ company.name }}</div>
+                                    <div class="titlename opacity-50">{{ company.location }}Jakarta, Indonesia</div>
+                                    <div class="activity">
+                                        <div class="list-act">
+                                            <span>{{ company.jobs_count|default(0) }}</span>
+                                            Job Posted
+                                        </div>
+                                        <div class="list-act">
+                                            <span>{{ company.applicants_count|default(0) }}</span>
+                                            Applied
+                                        </div>
+                                        <div class="list-act">
+                                            <span>{{ company.interviews_count|default(0) }}</span>
+                                            Interviewed
+                                        </div>
+                                    </div>
+                                    <div class="h-gpa-iq">
+                                        <ul>
+                                            <li class="px-0">
+                                                <img src="{{ 'assets/images/wallet.svg'|theme }}" alt="" class="me-2 ms-1">
+                                                Deposite
+                                                <span class="text-darkblue font-weight-700 fs-22">IDR 295.000.000</span>
+                                                <a href="#" class="btn btn-green px-3 font-weight-500 py-2 fs-12 ms-3">Refund</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="find-jobs">
+                                    <a href="{{ url('mycompany/job/new') }}" class="btn btn-yellow w-100">
+                                        <div>
+                                            <i data-feather="briefcase" class="d-none-m"></i>
+                                            <div class="fs-14 mt-2 mt-0-m fs-12-m">Post New Job</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-lg-3 pe-5 pe-md-12">
+                {% partial 'mycompany/filter' %}
+            </div>
+            <div class="col-lg-9 col-listjobs mt-30-m">
+                <div class="title-list">Your Posted Jobs</div>
+                <nav>
+                  <div class="nav nav-tabs tabs-th tabs-profile" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-job-posted-tab" data-bs-toggle="tab" data-bs-target="#nav-job-posted" type="button" role="tab" aria-controls="nav-job-posted" aria-selected="true">Jobs Posted (60)</button>
+                    <button class="nav-link" id="nav-draft-tab" data-bs-toggle="tab" data-bs-target="#nav-draft" type="button" role="tab" aria-controls="nav-draft" aria-selected="false">Draft (49)</button>
+                    <button class="nav-link" id="nav-unpublishd-tab" data-bs-toggle="tab" data-bs-target="#nav-unpublishd" type="button" role="tab" aria-controls="nav-unpublishd" aria-selected="false">Unpublished (20)</button>
+                    <button class="nav-link" id="nav-success-tab" data-bs-toggle="tab" data-bs-target="#nav-success" type="button" role="tab" aria-controls="nav-success" aria-selected="false">Success (30)</button>
+                  </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-job-posted" role="tabpanel" aria-labelledby="nav-job-posted-tab">
+                        <div class="card list-prof mb-3 lp-waiting">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="pr-prossstat text-blue">Ongoing - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                            <div class="stat-job waiting"><i data-feather="alert-circle"></i> <span>Waiting for Payment</span></div>
+                                        </div>
+                                        <div class="act-list">
+                                            <div>
+                                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                                            </div>
+                                            <div>
+                                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                        <div class="action mt-5 pt-3">
+                                            <div class="dot-nav">
+                                                <i data-feather="more-horizontal"></i>
+                                                <div class="subdot-nav">
+                                                    <a href="#"><img src="{{ 'assets/images/Unpublish.svg'|theme }}" alt=""> Unpublish Job</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-outline-dark w-auto me-2">Confirm Payment</a>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow w-auto">View All Candidates</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card list-prof mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="pr-prossstat text-blue">Ongoing - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                            <div class="stat-job paid"><i data-feather="check-circle"></i> <span>Paid</span></div>
+                                        </div>
+                                        <div class="act-list">
+                                            <div>
+                                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                                            </div>
+                                            <div>
+                                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                        <div class="action mt-5 pt-3">
+                                            <div class="dot-nav">
+                                                <i data-feather="more-horizontal"></i>
+                                                <div class="subdot-nav">
+                                                    <a href="#"><img src="{{ 'assets/images/Unpublish.svg'|theme }}" alt=""> Unpublish Job</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow w-auto">View All Candidates</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card list-prof mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="pr-prossstat text-blue">Ongoing - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                            <div class="stat-job processed"><i data-feather="clock"></i> <span>Payment Processed</span></div>
+                                        </div>
+                                        <div class="act-list">
+                                            <div>
+                                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                                            </div>
+                                            <div>
+                                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                        <div class="action mt-5 pt-3">
+                                            <div class="dot-nav">
+                                                <i data-feather="more-horizontal"></i>
+                                                <div class="subdot-nav">
+                                                    <a href="#"><img src="{{ 'assets/images/Unpublish.svg'|theme }}" alt=""> Unpublish Job</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow w-auto">View All Candidates</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-draft" role="tabpanel" aria-labelledby="nav-draft-tab">
+                        <div class="card list-prof mb-3 lp-waiting">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6 pt-2">
+                                        <div class="pr-prossstat text-blue">Ongoing - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                            <div class="stat-job waiting"><i data-feather="alert-circle"></i> <span>Waiting for Payment</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                        <div class="action mt-5">
+                                            <div class="dot-nav">
+                                                <i data-feather="more-horizontal"></i>
+                                                <div class="subdot-nav">
+                                                    <a href="#" class="pb-0"><i data-feather="edit"></i> Edit This Job</a>
+                                                    <a href="#" class="text-danger"><i data-feather="x-circle"></i> Cancel Job</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-outline-dark w-auto me-2">Confirm Payment</a>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-dark w-auto" data-bs-toggle="modal" data-bs-target="#modal_attention">Post Job</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card list-prof mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6 pt-2">
+                                        <div class="pr-prossstat text-blue">Ongoing - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                            <div class="stat-job paid"><i data-feather="check-circle"></i> <span>Paid</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                        <div class="action mt-5">
+                                            <div class="dot-nav">
+                                                <i data-feather="more-horizontal"></i>
+                                                <div class="subdot-nav">
+                                                    <a href="#" class="pb-0"><i data-feather="edit"></i> Edit This Job</a>
+                                                    <a href="#" class="text-danger"><i data-feather="x-circle"></i> Cancel Job</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-dark w-auto" data-bs-toggle="modal" data-bs-target="#modal_attention">Post Job</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card list-prof mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6 pt-2">
+                                        <div class="pr-prossstat text-blue">Ongoing - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                            <div class="stat-job processed"><i data-feather="clock"></i> <span>Payment Processed</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                        <div class="action mt-5">
+                                            <div class="dot-nav">
+                                                <i data-feather="more-horizontal"></i>
+                                                <div class="subdot-nav">
+                                                    <a href="#" class="pb-0"><i data-feather="edit"></i> Edit This Job</a>
+                                                    <a href="#" class="text-danger"><i data-feather="x-circle"></i> Cancel Job</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-dark w-auto" data-bs-toggle="modal" data-bs-target="#modal_attention">Post Job</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-unpublishd" role="tabpanel" aria-labelledby="nav-unpublishd-tab">
+                        <div class="card list-prof mb-3 lp-unpublish">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="pr-prossstat text-blue">Ongoing - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                            <div class="stat-job waiting"><i data-feather="alert-circle"></i> <span>Waiting for Payment</span></div>
+                                        </div>
+                                        <div class="act-list">
+                                            <div>
+                                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                                            </div>
+                                            <div>
+                                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                        <div class="action mt-5 pt-3">
+                                            <div class="dot-nav">
+                                                <i data-feather="more-horizontal"></i>
+                                                <div class="subdot-nav">
+                                                    <a href="#" class="text-danger"><i data-feather="x-circle"></i> Cancel Job</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-outline-dark w-auto me-2">Re-Publish</a>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow w-auto">View All Candidates</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card list-prof mb-3 lp-unpublish">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="pr-prossstat text-blue">Ongoing - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                            <div class="stat-job paid"><i data-feather="check-circle"></i> <span>Paid</span></div>
+                                        </div>
+                                        <div class="act-list">
+                                            <div>
+                                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                                            </div>
+                                            <div>
+                                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                        <div class="action mt-5 pt-3">
+                                            <div class="dot-nav">
+                                                <i data-feather="more-horizontal"></i>
+                                                <div class="subdot-nav">
+                                                    <a href="#" class="text-danger"><i data-feather="x-circle"></i> Cancel Job</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-outline-dark w-auto me-2">Re-Publish</a>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow w-auto">View All Candidates</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card list-prof mb-3 lp-unpublish">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="pr-prossstat text-blue">Ongoing - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                            <div class="stat-job processed"><i data-feather="clock"></i> <span>Payment Processed</span></div>
+                                        </div>
+                                        <div class="act-list">
+                                            <div>
+                                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                                            </div>
+                                            <div>
+                                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                        <div class="action mt-5 pt-3">
+                                            <div class="dot-nav">
+                                                <i data-feather="more-horizontal"></i>
+                                                <div class="subdot-nav">
+                                                    <a href="#" class="text-danger"><i data-feather="x-circle"></i> Cancel Job</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-outline-dark w-auto me-2">Re-Publish</a>
+                                            <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow w-auto">View All Candidates</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-success" role="tabpanel" aria-labelledby="nav-success-tab">
+                        <div class="card list-prof mb-3 lp-success">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="pr-prossstat">Done - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                        <div class="act-list">
+                                            <div>
+                                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                                            </div>
+                                            <div>
+                                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                          <div class="grid-item-user main-user">
+                                            <div class="items-user">
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card list-prof mb-3 lp-success">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="pr-prossstat">Done - 3 Positions Required</div>
+                                        <div class="pr-name">Senior Full-Stack Reils Developer</div>
+                                        <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                                        <div class="act-list">
+                                            <div>
+                                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                                            </div>
+                                            <div>
+                                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 text-end position-relative">
+                                          <div class="grid-item-user main-user">
+                                            <div class="items-user">
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                              <div class="item-user">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_cv">
+                                                  <div class="thumb-iu"><img src="{{ 'assets/images/hero.jpg'|theme }}" alt=""></div>
+                                                  <span>Sebastian Fauzial</span>
+                                                </a>
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# {% partial 'mycompany/job/items' jobs=jobs %} #}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal Congratulation -->
+{% partial 'modal-congratulation' %}
+
+<!-- Modal Add New Jobs -->
+{% partial 'modal-new-jobs' %}
+
+<!-- Modal Add New Jobs -->
+{% partial 'modal-payment-confirmation' %}
+
+<!-- Modal Add New Jobs -->
+{% partial 'modal-payment-request-sent' %}
+
+
+<!-- Modal Job Posted -->
+{% partial 'mycompany/job/modal-job-posted2' %}
+
+<!-- Modal CV -->
+{% partial 'mycompany/job/modal-cv' %}
+
+<script>
+    const slider = document.querySelector('.items-user');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slider.classList.add('active');
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+    slider.addEventListener('mousemove', (e) => {
+      if(!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 3; //scroll-fast
+      slider.scrollLeft = scrollLeft - walk;
+      console.log(walk);
+    });
+</script>

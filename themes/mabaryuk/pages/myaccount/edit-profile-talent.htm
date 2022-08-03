@@ -1,0 +1,83 @@
+title = "My Profile"
+url = "/edit-profile-talent"
+layout = "default"
+
+[session]
+security = "user"
+redirect = "home"
+==
+<section class="dtl-acc">
+    <div class="header-full">
+        <img src="{{ 'assets/images/bg-talents.jpg'|theme }}" alt="" class="bg-header">
+        <form action="" method="POST" enctype="multipart/form-data" class="change-photo">
+            <div class="preview-zone hidden">
+                <div class="box box-solid">
+                    <div class="box-body"></div>
+                </div>
+             </div>
+             <div class="dropzone-wrapper">
+                <div class="dropzone-desc">
+                   <span>Upload New Header</span>
+                   <p>Choose an image file or drag it here.</p>
+                </div>
+                <input type="file" name="img_logo" class="dropzone">
+             </div>
+           </div>
+        </form> 
+    </div>
+    <div class="container">
+        <div class="row my-5 justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="text-center">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="change-pp">
+                            <div class="preview-zone hidden">
+                                <div class="box box-solid">
+                                    <div class="box-body"></div>
+                                </div>
+                            </div>
+                            <div class="dropzone-wrapper">
+                                <div class="dropzone-desc">
+                                   <span><i data-feather="edit"></i> Edit Photo</span>
+                                </div>
+                                <input type="file" name="img_pp" class="dropzone">
+                            </div>
+                        </div>
+                        <div class="group-li mb-3">
+                            <label for="name">Name</label> 
+                            <input type="text" name="name" class="form-control form-th" placeholder="Name">
+                        </div>
+                        <div class="group-li">
+                            <label for="password">Password</label> 
+                            <input type="password" name="password" class="form-control form-th" placeholder="Password">
+                        </div>
+                        <div class="text-end mb-0">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#change_password" class="forgot-pass">change password</a>
+                        </div>
+                        <div class="group-li mb-3">
+                            <label for="email">Email</label> 
+                            <input type="email" name="email" class="form-control form-th" placeholder="Email">
+                        </div>
+                        <div class="group-li mb-4">
+                            <label for="phone">Phone</label> 
+                            <input type="text" name="phone" class="form-control form-th" placeholder="Phone">
+                        </div>
+                        <div class="row text-start">
+                            <div class="col-12">
+                                <h4 class="text-darkblue mb-3"><b>Your profile hasn't complete <i class="text-red" data-feather="alert-circle"></i></b></h4>
+                                <button class="btn btn-yellow py-2 px-5">Complete My Profile</button>
+                            </div>
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Modal Change Password -->
+{% partial 'modal-change-password' %}
+
+<!-- Modal Password Change -->
+{% partial 'modal-password-change' %}

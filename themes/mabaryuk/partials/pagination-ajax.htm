@@ -1,0 +1,33 @@
+{% if records.hasPages %}
+    <ul class="pagination pagination-ajax">
+        <li class="page-item">
+            {% if records.currentPage > 1 %}
+                <a class="page-link" href="#" data-page="{{ records.currentPage - 1 }}" aria-label="Previous" rel="prev">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            {% else %}
+                <a class="page-link disabled" href="#" aria-label="Previous" rel="prev">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            {% endif %}
+        </li>
+
+        {% for page in range(1, records.lastPage) %}
+            <li class="page-item {% if (records.currentPage == page) %} active {% endif %}">
+                <a class="page-link" href="#" data-page="{{ page }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+
+        <li class="page-item">
+            {% if records.hasMorePages %}
+                <a class="page-link" href="#" data-page="{{ records.currentPage + 1 }}" aria-label="Next" rel="next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            {% else %}
+                <a class="page-link disabled" href="#" aria-label="Next" rel="next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            {% endif %}
+        </li>
+    </ul>
+{% endif %}

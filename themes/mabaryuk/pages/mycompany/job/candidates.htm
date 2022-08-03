@@ -1,0 +1,122 @@
+title = "Candidates"
+url = "mycompany/job/:job_id/candidates"
+layout = "default"
+
+[session]
+security = "user"
+allowedUserGroups[] = "admin_company"
+redirect = "home"
+
+[candidateList]
+==
+<section class="dtl-acc sec-first">
+    <div class="card list-prof h_talent h-auto-m">
+        <div class="card-body">
+            <div class="container p-0-m">
+                <div class="row">
+                    <div class="col-sm-6">
+                        {% if job.status.id == 4 %}
+                            {% set status = job.status.name ~ ' - ' ~ job.number_required ~ ' Positions Acquired' %}
+                            {% set statusCls = 'text-green' %}
+                        {% elseif job.status.id == 3 %}
+                            {% set status = job.status.name %}
+                            {% set statusCls = 'text-red' %}
+                        {% elseif job.status.id == 2 %}
+                            {% set status = job.status.name ~ ' - ' ~ job.number_required ~ ' Positions Required' %}
+                            {% set statusCls = 'text-blue' %}
+                        {% else %}
+                            {% set status = job.status.name ~ ' - ' ~ job.number_required ~ ' Positions Required' %}
+                            {% set statusCls = 'text-blue' %}
+                        {% endif %}
+                        <div class="pr-prossstat {{ statusCls }}">{{ status }}</div>
+                        <div class="pr-name">{{ job.title }}</div>
+                        <div class="date">Posted on {{ job.created_at|date('j F Y') }}</div>
+                        <div class="act-list">
+                            <div>
+                                <span>{{ job.applicants.count|default(0) }}</span> Applied
+                            </div>
+                            <div>
+                                <span>{{ job.interviews_count|default(0) }}</span> Interviewed
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-end">
+                        <div class="action mt-5">
+                            <a href="{{ url('mycompany/profile') }}" class="btn btn-primary w-auto">Back To Job List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-lg-3 pe-5 pe-md-12" id="filter-box">
+                {% partial 'mycompany/job/filter-candidate' tab=tab %}
+            </div>
+            <div class="col-lg-9 col-listjobs mt-30-m">
+                <nav>
+                  <div class="nav nav-tabs tabs-th" id="nav-tab" role="tablist">
+                    {% for tab, tabName in tabs %}
+                        <button
+                            class="nav-link {% if loop.first %} active {% endif %}"
+                            id="nav-{{ tab }}-tab"
+                            data-request="candidateList::onLoad"
+                            data-request-data="tab: '{{tab}}'"
+                            data-request-form="#form-filter, #form-pagination-{{ tab }}"
+                            data-request-update="'mycompany/job/candidate-card': '#nav-{{ tab }}', 'mycompany/job/filter-candidate': '#filter-box'"
+                            data-attach-loading
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-{{ tab }}"
+                            type="button"
+                            role="tab"
+                            aria-selected="true">{{ tabName }} ({{ count_candidate[tab] }})</button>
+                        {% endfor %}
+                  </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    {% for tab, tabName in tabs %}
+                        <div class="tab-pane fade {% if loop.first %}show active{% endif %}" id="nav-{{ tab }}" role="tabpanel" aria-labelledby="nav-{{ tab }}-tab">
+                            {% partial 'mycompany/job/candidate-card' candidates=candidates tab=tab %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="invitation_sent" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="form-login p-3 text-center">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <img src="{{ 'assets/images/envalope.jpg'|theme }}" alt="" width="85" class="mt-4">
+                    <h2 class="my-3">Interview Invitation Sended!</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Delete -->
+{% partial 'mycompany/job/modal-delete' job=job %}
+
+<!-- Modal Complete Unlock -->
+{% partial 'mycompany/job/modal-complete-unlock' %}
+
+<!-- Modal Invitation Sent -->
+{% flash success %}
+    {% partial 'mycompany/job/modal-invitation-sent' %}
+    {% put scripts %}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                setTimeout(() => {
+                    $("#invitation_sent").modal('show')
+                }, 1000)
+            })
+        </script>
+    {% endput %}
+{% endflash %}

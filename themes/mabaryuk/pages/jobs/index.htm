@@ -1,0 +1,82 @@
+title = "Jobs"
+url = "/jobs"
+layout = "default"
+
+[job]
+[jobAction]
+==
+use MabarYuk\User\Models\Recaptcha as RecaptchaSetting;
+function onStart() {
+    $this['recaptcha_is_enable'] = ((bool) RecaptchaSetting::get('is_enable', false));
+    $this['site_key'] = RecaptchaSetting::get('site_key', '');
+}
+==
+<section class="bg-whitelight sec-first pb-0-m">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="header-jobs">
+                    <div class="row">
+                        <div class="col-2">
+                            <img src="{{ 'assets/images/caracter2.png'|theme }}" alt="" class="h-caracter">
+                        </div>
+                        <div class="col-10 col-md-8">
+                            <div class="desc-header">
+                                <h1>Be a Hero to Your Friend and Get Rewarded</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-jobs jobs-page">
+                    <div class="row">
+                        <div class="col-lg-3 pe-5 pe-md-12">
+                            {% partial 'jobs/filter' %}
+                        </div>
+                        <div class="col-lg-9 col-listjobs">
+                            <div class="title-list">Latest jobs</div>
+                            {% if jobs.total == 0 %}
+                            <div class="title-list-search">Data Not Found</div>
+                            <!-- <div class="title-list-search hide">Showing Result for <strong>'Design'</strong></div> -->
+                            {% endif %}
+                            <div class="accordion" id="accordionJobs">
+                              {% partial 'jobs/items' jobs=jobs %}
+                            </div>
+                            <div class="text-center mt-5">
+                                <nav class="d-inline-block">
+                                  {% partial 'pagination' records=jobs %}
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% partial 'jobs/modal-job-applied' %}
+{% if recaptcha_is_enable and site_key %}
+    {% put scripts %}
+        <script src="{{ 'assets/modules/user/recaptcha.js'|theme }}"></script>
+    {% endput %}
+{% endif %}
+{% put scripts %}
+<script>
+    $(document).on('ready', function() {
+        $('.collapse').on('show.bs.collapse', function () {
+            var colId = $(this).attr('id');
+            $('#action-'+ colId).toggle('hide');
+        });
+
+        $('.collapse').on('hide.bs.collapse', function () {
+            var colId = $(this).attr('id');
+            $('#action-'+ colId).toggle('show');
+        });
+
+        if (getCookie('job_id_refer')) {
+            $('.refering-friend[data-job-id='+getCookie('job_id_refer')+']').first().click();
+            setCookie('job_id_refer', null, 1);
+        }
+    })
+</script>
+{% endput %}

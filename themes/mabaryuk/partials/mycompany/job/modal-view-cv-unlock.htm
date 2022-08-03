@@ -1,0 +1,99 @@
+<div class="modal fade" id="view_cv_unlock_modal-{{ row.id }}" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="form-login p-3">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="d-inline-flex align-items-center mb-5">
+              <div class="thumb-jobs">
+                {% if row.user.avatar %}
+                <img src="{{ row.user.avatar.getThumb(135, 135, {'quality': 80}) }}" alt="">
+                {% else %}
+                <img src="{{ 'assets/images/user.png'|theme }}" alt="">
+                {% endif %}
+                </div>
+              <div>
+                  <div class="pr-name">{{ row.name }}</div>
+                  <div class="date">{{ row.user.gender_name }}, {{ row.user.age }}</div>
+                  <div class="date text-blue">{{ row.user.permanent_location }}</div>
+              </div>
+          </div>
+          <h5 class="text-darkblue mb-3"><b>Contact</b> </h5>
+          <ul class="fs-14">
+              <li class="mb-3"><span class="text-blue"><b>Email</b></span><br> {{ row.email }}</li>
+              <li><span class="text-blue"><b>Phone</b></span><br> {{ row.phone }}</li>
+          </ul>
+          <hr class="my-4">
+          <h5 class="text-darkblue mb-3"><b>About This Candidate</b> </h5>
+          <p>{{ row.user.about }}</p>
+          
+          <hr class="my-4">
+          <h5 class="text-darkblue mb-3"><b>Formal Education</b> </h5>
+          <ul class="fs-14">
+              {% for edu in row.user.educations %}
+              <li><span class="text-blue"><b>{{ edu.ref_education.name }} - {{ edu.institution }} (Graduated {{ edu.grad_year }})</b></span><br>{{ edu.major }} - GPA {{ edu.gpa }}</li>
+              {% endfor %}
+          </ul>
+          
+          <hr class="my-4">
+          <h5 class="text-darkblue mb-3"><b>Non-Formal Education</b> </h5>
+          <ul class="fs-14">
+              {% for nonformal in row.user.nonformal_educations %}
+              <li><span class="text-blue"><b>{{ nonformal.name }} ({{ nonformal.start_period|date('d/m/Y') }} - {{ nonformal.end_period|date('d/m/Y')}})</b></span><br>{{ nonformal.institution }}</li>
+              {% endfor %}
+          </ul>
+          
+          <hr class="my-4">
+          <h5 class="text-darkblue mb-3"><b>Working Experience</b> </h5>
+          {% for exp in row.user.working_exps %}
+          <p class="text-blue"><b>{{ exp.company_name }} | {{ exp.position }} ({{ exp.start_period|date('Y') }}-{{ exp.end_period|date('Y') }})</b></p>
+          <p>{{ exp.description }}</p>
+          {% if exp.projects %}
+              {% for project in exp.projects %}
+              <ul class="fs-14">
+                  <li><b><i>{{ project.name }} ({{ project.start_period|date('Y') }}-{{ project.end_period|date('Y') }})</i></b><br>{{ project.description }}</li>
+              </ul>
+              {% endfor %}
+          {% endif %}
+          {% endfor %}
+          
+          <hr class="my-4">
+          <h5 class="text-darkblue mb-3"><b>Skillsets</b> </h5>
+          <ul class="fs-14">
+              {% for skill in row.user.skills %}
+              <li>{{ skill.ref.name }} ({{ skill.level.name }})</li>
+              {% endfor %}
+          </ul>
+          <hr class="my-4">
+          <h5 class="text-darkblue mb-3"><b>Certificate</b> </h5>
+          <ul class="fs-14">
+              {% for cert in row.user.certificates %}
+              <li class="mb-3"><span class="text-blue"><b>{{ cert.subject }}</b> 
+                  {% if cert.doc %}
+                  <a href="{{ cert.doc.getPath() }}" target="_blank">(view certificate)</a>
+                  {% endif %}
+              </span>
+                  {% if cert.serial_number %}<br>Serial Number: {{ cert.serial_number }} {% endif %}
+                  {% if cert.issuer %}<br>Issuer: {{ cert.issuer }} {% endif %}
+                  {% if cert.issue_date %}<br>Issue Date: {{ cert.issue_date|date('d/m/Y') }} {% endif %}
+              </li>
+              {% endfor %}
+          </ul>
+          <hr class="my-4">
+          <h5 class="text-darkblue mb-3"><b>Languanges</b> </h5>
+          <ul class="fs-14">
+              {% for lang_skill in row.user.lang_skills %}
+              <li>{{ lang_skill.ref.name }} ({{ lang_skill.level.name }})</li>
+              {% endfor %}
+          </ul>
+          {% if row.current_status.id in [8, 10, 11, 12] %}
+          <a href="#" class="btn btn-yellow d-inline-flex align-items-center mt-5" data-bs-target="#invite_interview_model-{{ row.id }}" data-bs-toggle="modal">Invite for Interview</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Invite for Interview -->
+{% partial 'mycompany/job/modal-invite-interview' candidate=row %}

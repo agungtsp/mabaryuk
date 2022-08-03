@@ -1,0 +1,14 @@
+<div class="add-section-working-experience">
+    <div id="working-exps-container">
+    {% if not user.working_exps %}
+        {% partial 'myaccount/cv/form-item-working-experience' key=0 %}
+    {% else %}
+        {% for i, exp in user.working_exps %}
+            {% partial 'myaccount/cv/form-item-working-experience' key=i experience=exp %}
+        {% endfor %}
+    {% endif %}
+    </div>
+</div>
+<a href="#" class="btn btn-outline-secondary w-100 fs-14"
+    data-increment="{{ user.working_exps.count() }}"
+><i data-feather="plus-circle"></i> Add More Working Experience</a>

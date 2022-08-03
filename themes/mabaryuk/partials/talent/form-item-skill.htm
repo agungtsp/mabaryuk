@@ -1,0 +1,32 @@
+<div class="row skill-items">
+    <a href="javascript:void(0);" class="trash-section-form  btn-remove" data-min="1" data-container=".skill-items"><i data-feather="trash-2"></i></a>
+    <input type="hidden" name="skills[id][]" value="{{ skill.id }}">
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">Your Skill</label>
+            <select name="skills[skill_id][]" id=""
+                class="form-select form-th custom-select2"
+                data-handler="master::onSearchSkill"
+                data-minimum-input-length="2"
+                data-ajax--delay="300"
+                required
+            >
+                <option value="">Your skill</option>
+                {% if skill %}
+                    <option selected value="{{ skill.skill_id }}">{{ skill.ref.name }}</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="group-li mb-3">
+            <label for="">Skill Level</label>
+            <select name="skills[ref_prof_skill_level_id][]" required id="" class="form-select custom-select2">
+                <option value="">Your skill level</option>
+                {% for level in master.profSkillLevels %}
+                    <option value="{{ level.id }}" {% if skill.ref_prof_skill_level_id == level.id %} selected {% endif %}>{{ level.alias }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>

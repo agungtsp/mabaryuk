@@ -1,0 +1,137 @@
+title = "Billing - Payment Confirmation"
+url = "/mycompany/billings/:invoice_number/payment-confirmation/"
+layout = "default"
+
+[session]
+security = "user"
+allowedUserGroups[] = "admin_company"
+redirect = "home"
+
+[master]
+[billingDetail]
+==
+<section class="page-noh">
+    <div class="container">
+        <div class="row my-5 justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <form
+                    data-request="billingDetail::onConfirm"
+                    data-request-success="$('#modal_confirm_success').modal('show');"
+                    data-request-files
+                    data-browser-validate
+                    enctype="multipart/form-data"
+                >
+                    <!-- Step 1 -->
+                    <div class="deposit-form">
+                        <div class="title-list mb-2">Upload Your Receipt to Confirm Your Payment</div>
+                        <p class="mb-5">Please upload your receipt to confirm your payment in jpg or png format with a maximum size of 1 MB.</p>
+                        <div class="group-li mb-3">
+                            <label for="">Receipt</label>
+                            <div class="position-relative">
+                                <input type="file" name="receipt" class="fileinput"
+                                    data-error="#error-receipt"
+                                    required
+                                    data-file-text="Upload Receipt (Max. 1MB)"
+                                    data-file-textupload="Receipt Uploaded!"
+                                    data-file-placeholder="{% if billing.payment_confirm.receipt %}{{ billing.payment_confirm.receipt.file_name }}{% endif %}">
+                            </div>
+                            <span id="error-receipt"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="">Payment Method</label>
+                                    <div class=" multiple-select">
+                                        <select class="form-select form-th custom-select2 select-creatable"
+                                            data-placeholder="Payment Method"
+                                            required
+                                            name="ref_payment_method_id"
+                                        >
+                                            <option value>Choose Your Payment Method</option>
+                                            {% for item in master.paymentMethods()|filter(v => v.id != 2) %}
+                                            <option value="{{ item.id }}" {% if item.id == billing.payments[0].ref_payment_method_id %} selected {% endif %}>{{ item.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="">Account Name</label>
+                                    <input type="text" required name="bank_acc_name" value="{{ billing.payment_confirm.bank_acc_name }}" class="form-control form-th" placeholder="Your Bank Account Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="">From (Bank)</label>
+                                    <input type="text" required name="bank_name" value="{{ billing.payment_confirm.bank_name }}" class="form-control form-th" placeholder="Choose Your Bank">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="">Destination Bank</label>
+                                    <div class=" multiple-select">
+                                        <select class="form-select form-th custom-select2 select-creatable"
+                                            data-placeholder="Payment Method"
+                                            required
+                                            name="dest_bank_id"
+                                        >
+                                            <option value>Choose Desination Bank</option>
+                                            {% for item in master.bankAccounts() %}
+                                            <option value="{{ item.id }}" {% if item.id == billing.payments[0].ref_bank_account_id %} selected {% endif %}>
+                                                {{ item.ref_bank.name }} - {{ item.acc_name }} - {{ item.acc_number }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="">Payment Date</label>
+                                    <label class="form-date" for="">
+                                        <i data-feather="calendar"></i>
+                                        <input type="text" name="payment_date" data-error="#error-payment_date" required value="{% if billing.payment_confirm.payment_date %}{{ billing.payment_confirm.payment_date|date('d/m/Y') }}{% endif %}" class="form-control form-th datepicker" placeholder="Your Payment Date" id="">
+                                    </label>
+                                    <span id="error-payment_date"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="group-li mb-3">
+                                    <label for="">Total Payment</label>
+                                    {% if billing.payment_confirm %}
+                                    <input type="required" required name="amount" value="{{ billing.payments[0].amount|number_format(0, ',', '') }}" class="form-control form-th" placeholder="Your Total Payment">
+                                    {% else %}
+                                    <input type="required" required name="amount" value="{{ billing.total|number_format(0, ',', '') }}" class="form-control form-th" placeholder="Your Total Payment">
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="group-li mb-3">
+                                    <label for="">Invoice Number</label>
+                                    <input type="text" name="invoice_number" value="{{ billing.invoice_number }}" class="form-control form-th" readonly placeholder="Your Invoice Number">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="group-li mb-3">
+                                    <label for="">Note</label>
+                                    <textarea class="form-control form-th" rows="4" name="note" placeholder="Your Note">{{ billing.payment_confirm.note }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <a href="{{ url('mycompany/profile') }}" class="btn btn-outline-secondary w-100 py-2">Maybe Later</a>
+                            </div>
+                            <div class="col">
+                                <a href="#" class="btn btn-yellow w-100 py-2 btn-valid">Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% partial 'mycompany/billings/modal-confirm-success' %}

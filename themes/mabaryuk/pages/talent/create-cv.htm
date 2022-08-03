@@ -1,0 +1,232 @@
+title = "Home"
+url = "/talent/:talent_id/create-cv"
+layout = "default"
+
+[talentDetail]
+[master]
+==
+{% set job = talent.job %}
+{% set company = job.company %}
+<section class="page-noh page-cv-talent" id="section-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="left-cvt">
+                    <div class="list-prof">
+                        <div class="pr-prossstat">
+                            {{ job.year_exp_text }}
+                        </div>
+                        <div class="pr-name">{{ job.title }}</div>
+                        <div class="fl">
+                            <span class="d-block"><a href="{{ url('companies/' ~ talent.job.company.slug) }}">{{ talent.job.company.name }}</a></span>
+                            <span class="d-block fs-10">{{ company.location }}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <p><b>Requirements</b></p>
+                    <ul>
+                        {% for qualify in job.qualifications %}
+                        <li>{{ qualify.name }}</li>
+                        {% endfor %}
+                    </ul>
+                    <a href="#" class="see-company sc-close">
+                        <span>See Company's Detail</span>
+                        <i class="arrow"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-8 position-relative">
+                <div class="desc-detail">
+                    <button class="btn btn-close-sd sc-close"></button>
+                    <div class="fdesc-detail">
+                        <div class="list-jobs px-0 br-0 border-0 py-0 mb-5 mt-3">
+                            <div class="thumb"><i class="fas fa-briefcase"></i></div>
+                            <div class="desc w-100">
+                                <div class="title">{{ company.name }}</div>
+                                <div class="fl">
+                                    <span class="p-0">{{ company.location }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="fs-18"><b>About The Company</b></h5>
+                        <p class="fs-14">{{ company.about }}</p>
+                        <hr class="my-3">
+                        <h5 class="fs-18"><b>Benefits</b></h5>
+                        <ul class="fs-14">
+                            {% for benefit in company.benefits %}
+                            <li>{{ benefit.name }}</li>
+                            {% endfor %}
+                        </ul>
+                        <hr class="my-3">
+                        <h5 class="fs-18"><b>Work Culture</b></h5>
+                        <ul class="fs-14">
+                            {% for culture in company.cultures %}
+                            <li>{{ culture.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="right-cvt ps-4">
+                    <form
+                        id="form-cv"
+                        data-request="talentDetail::onSaveCV"
+                        data-request-success="$('#section-form').addClass('hide');$('#section-review').removeClass('hide');refreshEle();"
+                        data-request-update="'talent/review-cv': '#review-cv', 'talent/form-input-cv': '#form-cv'"
+                        data-request-files
+                        data-browser-validate
+                        enctype="multipart/form-data"
+                    >
+                        {% partial 'talent/form-input-cv' talent=talent %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="dtl-acc pb-0 hide" id="section-review">
+    <div class="container py-5">
+        <div class="content-dtl" id="review-cv">
+            {% partial 'talent/review-cv' talent=talent %}
+        </div>
+    </div>
+</div>
+
+{% partial 'talent/modal-job-applied' %}
+
+
+{% put scripts %}
+<script type="text/javascript">
+    $(document).on('click', '.btn-next', function() {
+        var isValid = checkValidity($(this).closest('.container-steps'));
+        if (isValid) {
+            var nextStep = $(this).data('next');
+            $(nextStep).removeClass('hide');
+            $(this).closest('.container-steps').addClass('hide');
+            containerCss(nextStep);
+        }
+    });
+
+    $(document).on('click', '.btn-prev', function() {
+        var prevStep = $(this).data('prev');
+        $(prevStep).removeClass('hide');
+        $(this).closest('.container-steps').addClass('hide');
+        containerCss(prevStep);
+        refreshEle();
+    });
+
+    $(document).on('click', '[data-increment]', function() {
+        containerCss(this);
+        var increment = $(this).attr('data-increment');
+        ++increment;
+        $(this).attr('data-increment', increment);
+        $.request('talentDetail::onAddItem',{
+            data: { key: increment },
+            update: { 'talent/form-item-working-experience': '@#working-exps-container' },
+            afterUpdate : function(data){
+                refreshEle();
+            },
+        });
+
+        return false;
+    });
+
+    $( function() {
+        var changeProvince = (ele, type, isKeepVal) => {
+            var code = $(ele).val();
+            var typeLoc = (type == 2) ? 'domicile_' : '';
+            var city = $('[name="user['+typeLoc+'city_code]"]');
+            if (!isKeepVal) $('[name="user['+typeLoc+'city_code]"], [name="user['+typeLoc+'district_code]"], [name="user['+typeLoc+'village_code]"]').val('').trigger('change').attr('disabled', 'disabled');
+            if (code) city.removeAttr('disabled');
+            city.attr('data-request-data', "type: 'city', code: '" + code  + "'");
+        };
+
+        var changeCity = (ele, type, isKeepVal) => {
+            var code = $(ele).val();
+            var typeLoc = (type == 2) ? 'domicile_' : '';
+            var district = $('[name="user['+typeLoc+'district_code]"]');
+            if (!isKeepVal) $('[name="user['+typeLoc+'district_code]"], [name="user['+typeLoc+'village_code]"]').val('').trigger('change').attr('disabled', 'disabled');
+            if (code) district.removeAttr('disabled');
+            district.attr('data-request-data', "type: 'district', code: '" + code + "'" );
+        };
+        
+        var changeDistrict = (ele, type, isKeepVal) => {
+            var code = $(ele).val();
+            var typeLoc = (type == 2) ? 'domicile_' : '';
+            var village = $('[name="user['+typeLoc+'village_code]"]');
+            if (!isKeepVal) village.val('').trigger('change').attr('disabled', 'disabled');
+            if (code) village.removeAttr('disabled');
+            village.attr('data-request-data', "type: 'village', code: '" + code + "'" );
+        };
+
+        changeProvince('[name="user[province_code]"]', 1, 1);
+        changeCity('[name="user[city_code]"]', 1, 1);
+        changeDistrict('[name="user[district_code]"]', 1, 1);
+        changeProvince('[name="user[domicile_province_code]"]', 2, 1);
+        changeCity('[name="user[domicile_city_code]"]', 2, 1);
+        changeDistrict('[name="user[domicile_district_code]"]', 2, 1);
+
+        //
+        // On Change Permanent Address
+        //
+        $('[name="user[province_code]"]').on('change', function() {
+            changeProvince(this);
+        });
+
+        $('[name="user[city_code]"]').on('change', function() {
+            changeCity(this);
+        });
+
+        $('[name="user[district_code]"]').on('change', function() {
+            changeDistrict(this);
+        });
+
+        //
+        // On Change Domicile Address
+        //
+        $('[name="user[domicile_province_code]"]').on('change', function() {
+            changeProvince(this, 2);
+        });
+
+        $('[name="user[domicile_city_code]"]').on('change', function() {
+            changeCity(this, 2);
+        });
+
+        $('[name="user[domicile_district_code]"]').on('change', function() {
+            changeDistrict(this, 2);
+        });
+    });
+
+    $(document).ready(function(){
+      $(".sc-close").click(function(){
+        $(".desc-detail").toggle();
+      });
+    });
+
+    var containerCss = (ele) => {
+        var container = $(ele).closest('.container-steps');
+        if (container.find('.btn-remove:visible').length > 0) {
+            container.css('padding-right', '35px');
+        } else {
+            container.css('padding-right', '');
+        }
+    };
+
+    var diffAddress = (ele) => {
+        var box = $('.curr_address_box'); 
+        if ($(ele).is(':checked')) {
+            box.removeClass('d-none');
+            box.find('input, textarea, select').attr('required', 'required');
+        } else {
+            box.addClass('d-none');
+            box.find('input, textarea, select').removeAttr('required');
+        }
+        refreshEle();
+    };
+    
+    diffAddress('[name="user[is_address_diff]"]');
+
+    $('[name="user[is_address_diff]"]').on('click', function() {
+        diffAddress(this);
+    });
+</script>
+{% endput %}

@@ -1,0 +1,21 @@
+<form
+    data-request="candidateList::onInviteInterview"
+    data-request-success="$('#invite_interview_model-{{ candidate.id }}').modal('hide');$('#invitation_sent').modal('show');"
+    data-request-update="'mycompany/job/form-interview': '#form-interview-{{ candidate.id }}'"
+    data-request-data="id: {{ candidate.id }}"
+    data-request-flash
+    data-browser-validate
+>
+    <div class="row">
+    <div class="col-6">
+        <input type="text" placeholder="Date" name="date" value="{{ candidate.interview.date }}" required class="form-control form-th ps-3 datepicker">
+    </div>
+    <div class="col-6">
+        <input type="text" placeholder="Time" name="time" value="{{ candidate.interview.time }}" required class="form-control form-th ps-3 datetimepicker-time">
+    </div>
+    <div class="col-12 my-4">
+        <input type="text" placeholder="Link (for online interview)" value="{{ candidate.interview.link }}" required name="link" class="form-control form-th ps-3">
+    </div>
+    </div>
+    <button class="btn btn-yellow-gradient w-100" data-attach-loading {% if candidate.current_status.id not in [8] %} disabled {% endif %}>Send Interview Invitation</button>
+</form>

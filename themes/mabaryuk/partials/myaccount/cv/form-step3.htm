@@ -1,0 +1,83 @@
+<div class="subtitle-list mb-3">Formal Education</div>
+<div class="add-section">
+    <div id="educations-container">
+    {% if not user.educations %}
+        {% partial 'myaccount/cv/form-item-education' %}
+    {% else %}
+        {% for edu in user.educations %}
+            {% partial 'myaccount/cv/form-item-education' education=edu %}
+        {% endfor %}
+    {% endif %}
+    </div>
+    <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+        data-request="heroAccount::onAddItem"
+        data-request-update="'myaccount/cv/form-item-education': '@#educations-container'"
+        data-request-success="refreshEle()"
+    ><i data-feather="plus-circle"></i> Add More Formal Education</a>
+</div>
+<div class="subtitle-list mb-3">Certification</div>
+<div class="add-section">
+    <div id="certificates-container">
+    {% if not user.certificates %}
+        {% partial 'myaccount/cv/form-item-certificate' %}
+    {% else %}
+        {% for cert in user.certificates %}
+            {% partial 'myaccount/cv/form-item-certificate' cert=cert %}
+        {% endfor %}
+    {% endif %}
+    </div>
+    <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+        data-request="heroAccount::onAddItem"
+        data-request-update="'myaccount/cv/form-item-certificate': '@#certificates-container'"
+        data-request-success="refreshEle()"><i data-feather="plus-circle"></i> Add More Certificate</a>
+</div>
+<div class="subtitle-list mb-3">Organization</div>
+<div class="add-section">
+    <div id="organizations-container">
+    {% if not user.organizations %}
+        {% partial 'myaccount/cv/form-item-organization' %}
+    {% else %}
+        {% for org in user.organizations %}
+            {% partial 'myaccount/cv/form-item-organization' organization=org %}
+        {% endfor %}
+    {% endif %}
+    </div>
+    <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+        data-request="heroAccount::onAddItem"
+        data-request-update="'myaccount/cv/form-item-organization': '@#organizations-container'"
+        data-request-success="refreshEle()"
+        ><i data-feather="plus-circle"></i> Add More Organization</a>
+</div>
+<div class="subtitle-list mb-3">Language</div>
+<div class="add-section">
+    <div id="lang-skills-container">
+    {% if not user.lang_skills %}
+        {% partial 'myaccount/cv/form-item-lang-skill' %}
+    {% else %}
+        {% for lang_skill in user.lang_skills %}
+            {% partial 'myaccount/cv/form-item-lang-skill' langSkill=lang_skill %}
+        {% endfor %}
+    {% endif %}
+    </div>
+    <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+        data-request="heroAccount::onAddItem"
+        data-request-update="'myaccount/cv/form-item-lang-skill': '@#lang-skills-container'"
+        data-request-success="refreshEle()"
+    ><i data-feather="plus-circle"></i> Add More Language</a>
+</div>
+<div class="subtitle-list mb-3">Skills</div>
+<div class="add-section">
+    <div id="skills-container">
+    {% if not user.skills %}
+        {% partial 'myaccount/cv/form-item-skill' %}
+    {% else %}
+        {% for skill in user.skills %}
+            {% partial 'myaccount/cv/form-item-skill' skill=skill %}
+        {% endfor %}
+    {% endif %}
+    </div>
+    <a href="#" class="btn btn-outline-secondary w-100 fs-14" 
+        data-request="heroAccount::onAddItem"
+        data-request-update="'myaccount/cv/form-item-skill': '@#skills-container'"
+        data-request-success="refreshEle()"><i data-feather="plus-circle"></i> Add More Skill</a>
+</div>

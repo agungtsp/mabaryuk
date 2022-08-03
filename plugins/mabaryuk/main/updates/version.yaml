@@ -1,0 +1,4 @@
+1.0.1: First version of Main
+1.0.2:
+  - 'Create pageviews table'
+  - create_pageviews_table.php

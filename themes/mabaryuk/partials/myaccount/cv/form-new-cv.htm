@@ -1,0 +1,88 @@
+<!-- Step 1 -->
+<div class="deposit-form container-steps" id="step1">
+    <div class="mb-5">
+        <div class="status">
+            <span>We want to know you better!</span>
+            <span>1/4</span>
+        </div>
+        <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="title-list mb-4">Biodata</div>
+    {% partial 'myaccount/cv/form-step1' %}
+    <div class="row mt-5">
+        <div class="col">
+            <a href="#" class="btn btn-primary w-100 py-2 btn-next" data-next="#step2">Next</a>
+        </div>
+    </div>
+</div>
+
+<!-- Step 2 -->
+<div class="deposit-form container-steps hide" id="step2">
+    <div class="mb-5">
+        <div class="status">
+            <span>One step closer!</span>
+            <span>2/4</span>
+        </div>
+        <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="title-list mb-4">Address & Formal Information</div>
+    {% partial 'myaccount/cv/form-step2' %}
+    <div class="row mt-5">
+        <div class="col">
+            <button type="button" class="btn btn-outline-secondary w-100 py-2 btn-prev" data-prev="#step1">Back</button>
+        </div>
+        <div class="col">
+            <a href="#" class="btn btn-primary w-100 py-2 btn-next" data-next="#step3">Next</a>
+        </div>
+    </div>
+</div>
+
+<!-- Step 3 -->
+<div class="deposit-form container-steps hide" id="step3">
+    <div class="mb-5">
+        <div class="status">
+            <span>Almost There!</span>
+            <span>3/4</span>
+        </div>
+        <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="title-list mb-4">Education</div>
+    {% partial 'myaccount/cv/form-step3' %}
+    <div class="row mt-5">
+        <div class="col">
+            <button type="button" class="btn btn-outline-secondary w-100 py-2 btn-prev" data-prev="#step2">Back</button>
+        </div>
+        <div class="col">
+            <a href="#" class="btn btn-primary w-100 py-2 btn-next" data-next="#step4">Next</a>
+        </div>
+    </div>
+</div>
+
+<!-- Step 4 -->
+<div class="deposit-form container-steps hide" id="step4">
+    <div class="mb-5">
+        <div class="status">
+            <span>Last Step!</span>
+            <span>4/4</span>
+        </div>
+        <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="title-list mb-4">Working Experience</div>
+    {% partial 'myaccount/cv/form-step4' %}
+    <div class="row mt-5">
+        <div class="col">
+            <button type="button" class="btn btn-outline-secondary w-100 py-2 btn-prev" data-prev="#step3">Back</button>
+        </div>
+        <div class="col">
+            <button type="submit" data-attach-loading class="btn btn-yellow w-100 py-2">Complete Profile</a>
+        </div>
+    </div>
+</div>

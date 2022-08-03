@@ -1,0 +1,57 @@
+<div class="list-section-we working-experience-items">
+    <a href="javascript:void(0);" class="trash-section-form-we btn-remove" data-min="1" data-container=".working-experience-items"><i data-feather="trash-2"></i></a>
+    <input type="hidden" name="working_experiences[id][{{ key }}]" value="{{ experience.id }}">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Company Name</label>
+                <input type="text" name="working_experiences[company_name][{{ key }}]" value="{{ experience.company_name }}" required class="form-control form-th" placeholder="Your Workplace Name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Company Phone</label>
+                <input type="text" name="working_experiences[company_phone][{{ key }}]" value="{{ experience.company_phone }}" class="form-control form-th" placeholder="Your Workplace Phone">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Position</label>
+                <input type="text" name="working_experiences[position][{{ key }}]" value="{{ experience.position }}" required class="form-control form-th" placeholder="Your position">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Working period</label>
+                <label class="form-date" for="">
+                    <i data-feather="calendar"></i>
+                    <input type="text" name="working_experiences[period][{{ key }}]" value="{% if experience.start_period %}{{ experience.start_period|date('d/m/Y') }} - {{ experience.end_period|date('d/m/Y') }}{% endif %}" required class="form-control form-th mydaterangepicker" placeholder="Working period">
+                </label>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="group-li mb-3">
+                <label for="">Responsibility</label>
+                <textarea class="form-control form-th" name="working_experiences[description][{{ key }}]" required rows="4" placeholder="Write your responsibity">{{ experience.description }}</textarea>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="add-section">
+        <div id="projects-container-{{ key }}">
+        {% if not experience.projects %}
+            {% partial 'myaccount/cv/form-item-project' %}
+        {% else %}
+            {% for project in experience.projects %}
+                {% partial 'myaccount/cv/form-item-project' project=project key=key %}
+            {% endfor %}
+        {% endif %}
+        </div>
+        <a href="#" class="btn btn-outline-secondary w-100 fs-14 mb-3"
+            data-request="heroAccount::onAddItem"
+            data-request-update="'myaccount/cv/form-item-project': '@#projects-container-{{ key }}'"
+            data-request-success="refreshEle()"
+            data-request-data="key:{{ key }}"
+        ><i data-feather="plus-circle"></i> Add More Project</a>
+    </div>
+</div>

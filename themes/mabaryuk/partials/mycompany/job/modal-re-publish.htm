@@ -1,0 +1,27 @@
+<div class="modal fade" id="modal_re_publish-{{ id }}" tabindex="-1" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="form-login p-3 text-center">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <img src="{{ 'assets/images/re-publish.jpg'|theme }}" alt="" width="85" class="mt-4">
+            <h2 class="my-3">Re-Publish This Job?</h2>
+            <p>This job will go back to public and can be seen by everyone in this website</p>
+            <div class="row mt-4">
+              <div class="col">
+                <a href="#" class="btn btn-outline-primary fs-12 w-100 py-2"
+                  data-request="jobPostAction::onPublish"
+                  data-request-success="$('#modal_re_publish-{{ id }}').modal('hide');$('#modal_republish_success').modal('show');$('#nav-unpublished-tab').click();refreshTabs();"
+                  data-request-data="id: {{ id }}"
+                  data-attach-loading
+                >Re-Publish</a>
+              </div>
+              <div class="col">
+                <a href="#" class="btn btn-primary fs-12 w-100 py-2" data-bs-dismiss="modal" aria-label="Close"><b>Don't Re-Publish</b></a>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

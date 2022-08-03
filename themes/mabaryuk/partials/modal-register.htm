@@ -1,0 +1,155 @@
+==
+function onStart() {
+    $this['site_key'] = getenv('RECAPTCHA_V3_SITE_KEY');
+}
+==
+<div class="modal fade" id="register_modal" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-4">
+          <div class="form-register p-3 pb-0">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h2 class="mt-0">Register as</h2>
+            <ul class="nav nav-tabs nav-tabs-register" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="referer-tab" data-bs-toggle="tab" data-bs-target="#referer" type="button" role="tab" aria-controls="referer" aria-selected="true">Referer</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="false">Company</button>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="referer" role="tabpanel" aria-labelledby="referer-tab">
+                <div class="fs-14">Lorem ipsum dolor sit amet, consetetur! <a href="#">Learn more</a></div>
+                <form
+                    data-request="heroAccount::onRegister"
+                    data-request-form="#register_modal form:visible"
+                    data-request-success="$('#register_modal').modal('hide');$('#email_sent_modal').modal('show');"
+                    data-request-flash
+                    data-attach-loading
+                    action="" id="formRegisterHero" >
+                  <input type="hidden" name="token" id="formRegisterHeroToken">
+                  <input type="hidden" name="action" id="formRegisterHeroAction">
+                  <input
+                    type="text"
+                    name="name"
+                    autocomplete="off"
+                    class="form-control form-th mb-3"
+                    placeholder="Your Name"
+                    required>
+                  <input
+                    type="text"
+                    name="phone"
+                    autocomplete="off"
+                    class="form-control form-th mb-3"
+                    placeholder="Your Number"
+                    required>
+                  <input
+                    type="email"
+                    name="email"
+                    autocomplete="off"
+                    class="form-control form-th mb-3"
+                    placeholder="Your Email"
+                    required
+                    data-request="heroAccount::onCheckEmail"
+                    data-request-success="$('#loginTaken').toggle(!!data.isTaken)"
+                    data-track-input>
+                  <div id="loginTaken" class="alert alert-danger" style="display: none">
+                    Sorry, that login name is already taken.
+                  </div>
+                  <input type="password"
+                    name="password"
+                    autocomplete="off"
+                    class="form-control form-th mb-3"
+                    placeholder="Create Password"
+                    required>
+                  <input type="password"
+                    name="password_confirmation"
+                    class="form-control form-th mb-3"
+                    placeholder="Confirm Password"
+                    required>
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button id="btnSubmitRegisterUser" type="submit" class="btn btn-yellow-gradient w-100">Register</button>
+                        </div>
+                        <div class="col-12 mt-3 fs-14 text-center">
+                          Have an account? <a class="ms-1 fw-600" href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#login_modal">Login</a>
+                        </div>
+                    </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
+                <div class="fs-14">Lorem ipsum dolor sit amet, consetetur! <a href="#">Learn more</a></div>
+                <form
+                    data-request="heroAccount::onCreateCompany"
+                    data-request-form="#register_modal form:visible"
+                    data-request-success="$('#register_modal').modal('hide');$('#email_sent_modal').modal('show');"
+                    data-request-flash
+                    data-attach-loading
+                    action=""
+                    id="formRegisterCompany" >
+                  <input type="hidden" name="token" id="formRegisterCompanyToken">
+                  <input type="hidden" name="action" id="formRegisterCompanyAction">
+                  <input
+                    type="text"
+                    name="name"
+                    autocomplete="off"
+                    class="form-control form-th mb-3"
+                    placeholder="Company Name"
+                    required>
+                  <input
+                    type="text"
+                    name="phone"
+                    autocomplete="off"
+                    class="form-control form-th mb-3"
+                    placeholder="Company Number"
+                    required>
+                  <select
+                    name="industry"
+                    class="form-select form-th mb-3"
+                  >
+                    <option>-- Choose an option --</option>
+                    {% for industry in industries %}
+                        <option value="{{ industry.id }}">{{ industry.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <input
+                    type="email"
+                    name="email"
+                    autocomplete="new-email"
+                    class="form-control form-th mb-3"
+                    placeholder="Email"
+                    required
+                    data-request="heroAccount::onCheckEmail"
+                    data-request-success="$('#loginTakenCompany').toggle(!!data.isTaken)"
+                    data-track-input>
+                  <div id="loginTakenCompany" class="alert alert-danger" style="display: none">
+                    Sorry, that login name is already taken.
+                  </div>
+                  <input type="password"
+                    name="password"
+                    autocomplete="new-password"
+                    class="form-control form-th mb-3"
+                    placeholder="Create Password"
+                    required>
+                  <input type="password"
+                    name="password_confirmation"
+                    class="form-control form-th mb-3"
+                    placeholder="Confirm Password"
+                    required>
+                    <div class="row justify-content-end">
+                        <div class="col-12">
+                            <button type="submit" id="btnSubmitRegisterCompany" class="btn btn-yellow-gradient w-100">Register</button>
+                        </div>
+                        <div class="col-12 mt-3 fs-14 text-center">
+                          Have an account? <a class="ms-1 fw-600" href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#login_modal">Login</a>
+                        </div>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

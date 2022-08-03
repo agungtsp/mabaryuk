@@ -1,0 +1,106 @@
+title = "My Profile"
+url = "/email-template/talent"
+layout = "default"
+
+[session]
+redirect = "home"
+==
+<section class="dtl-acc">
+    <div class="header-full">
+        <img src="{{ 'assets/images/bg-talents.jpg'|theme }}" alt="" class="bg-header">
+        <div class="f-desc">
+            <div class="container">
+                <div class="header-dtl">
+                    <div class="list-jobs mb-0">
+                        <div class="thumbnail thumb-profile">
+                            <img src="{{ 'assets/images/talent.png'|theme }}" alt="">
+                        </div>
+                        <div class="desc w-100">
+                            <div>
+                                <div class="fullname">Stephen Joe Keen</div>
+                                <div class="titlename">Job Seeker</div>
+                                <a href="./job-applied-list" class="btn btn-yellow-outline w-auto mt-3">See All Applied Job (27)</a>
+                            </div>
+                        </div>
+                        <div class="find-jobs">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#become_hero" class="btn btn-yellow w-100">Become a Hero</a>
+                        </div>
+                        <div class="action">
+                            <a href="#" class="btn btn-outline-light mb-4 d-block">Log Out</a>
+                            <a href="./edit-profile-talent" class="btn btn-outline-light d-block">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-12">
+                <div class="content-dtl">
+                    <h5 class="text-darkblue mb-3"><b>Contact</b> <a href="./form-talent-cv">edit</a></h5>
+                    <ul class="fs-14">
+                        <li class="mb-3"><span class="text-blue"><b>Email</b></span><br> stephen@gmail.com</li>
+                        <li><span class="text-blue"><b>Phone</b></span><br> 081254843585</li>
+                    </ul>
+                    <hr class="my-4">
+                    <h5 class="text-darkblue mb-3"><b>About This Candidate</b> <a href="./form-talent-cv">edit</a></h5>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus ducimus molestias dolorem hic nesciunt excepturi aliquam, sapiente modi iste nulla voluptatum quam corporis consequatur culpa consectetur neque asperiores repellat, expedita?</p>
+                    <hr class="my-4">
+                    <h5 class="text-darkblue mb-3"><b>Formal Education</b> <a href="./form-talent-cv">edit</a></h5>
+                    <ul class="fs-14">
+                        <li><span class="text-blue"><b>University of Lorem Ipsum (Graduated 2018)</b></span><br>Computer Science - GPA 3,67</li>
+                    </ul>
+                    <hr class="my-4">
+                    <h5 class="text-darkblue mb-3"><b>Non-Formal Education</b> <a href="./form-talent-cv">edit</a></h5>
+                    <p>School of Programming Jakarta</p>
+                    <hr class="my-4">
+                    <h5 class="text-darkblue mb-3"><b>Working Experience</b> <a href="./form-talent-cv">edit</a></h5>
+                    <p class="text-blue"><b>PT International Trading Investment (2018-2019)</b></p>
+                    <ul class="fs-14">
+                        <li><b><i>IT Support (2018-2019)</i></b><br>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto magnam officiis esse animi cumque qui amet molestiae sint nisi et obcaecati dolores vel dignissimos, facere optio provident ipsa non totam.</li>
+                    </ul>
+                    <p class="text-blue"><b>PT International Trading Investment (2019-2022)</b></p>
+                    <ul class="fs-14">
+                        <li><b><i>Backend Developer (2019-2022)</i></b><br>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto magnam officiis esse animi cumque qui amet molestiae sint nisi et obcaecati dolores vel dignissimos, facere optio provident ipsa non totam.</li>
+                        <li><b><i>Backend Leads (2019-2022)</i></b><br>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto magnam officiis esse animi cumque qui amet molestiae sint nisi et obcaecati dolores vel dignissimos, facere optio provident ipsa non totam.</li>
+                    </ul>
+                    <hr class="my-4">
+                    <h5 class="text-darkblue mb-3"><b>Skillsets</b> <a href="./form-talent-cv">edit</a></h5>
+                    <ul class="fs-14">
+                        <li>Java and C++</li>
+                        <li>Adobe Family</li>
+                        <li>Critical Thinking</li>
+                        <li>Communication</li>
+                    </ul>
+                    <hr class="my-4">
+                    <h5 class="text-darkblue mb-3"><b>Certificate</b> <a href="./form-talent-cv">edit</a></h5>
+                    <ul class="fs-14">
+                        <li>Expert Programming <a href="#">(view certificate)</a></li>
+                        <li>Developer of the Year <a href="#">(view certificate)</a></li>
+                        <li>English TOEFL Tes <a href="#">(view certificate)</a></li>
+                    </ul>
+                    <hr class="my-4">
+                    <h5 class="text-darkblue mb-3"><b>Languanges</b> <a href="./form-talent-cv">edit</a></h5>
+                    <ul class="fs-14">
+                        <li>Bahasa Indonesia</li>
+                        <li>English</li>
+                        <li>French</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal Prized Locked -->
+{% partial 'myaccount/modal-price-lock' %}
+
+<!-- Modal Become a Hero -->
+{% partial 'myaccount/modal-become-hero' %}
+
+<!-- Modal Congratulation -->
+{% partial 'modal-congratulation' %}
+
+<!-- Modal Jobb Applied -->
+{% partial 'talent/modal-job-applied' %}

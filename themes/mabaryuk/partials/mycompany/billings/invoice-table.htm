@@ -1,0 +1,54 @@
+<table cellspacing="0" cellpadding="5" border="0" width="100%">
+    <thead>
+        <tr>
+            <th>Job Title</th>
+            <th class="text-end">Required</th>
+            <th class="text-end">Standar Fee</th>
+            <!-- <th class="text-end">Priority Fee</th> -->
+            <th class="text-end">Total Fee</th>
+            <th class="text-end">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
+            <tr>
+                <td class="title-reward">{{item.job.title}}</td>
+                <td class="text-end">
+                    {{
+                        item.job.freshgrad_number +
+                        item.job.junior_number +
+                        item.job.middle_number +
+                        item.job.senior_number
+                    }} Person
+                </td>
+                <td class="text-end"> IDR {{item.subtotal|number_format(0, ',', '.')}} </td>
+                <!-- <td class="text-end"> IDR {{item.priority_fee|number_format(0, ',', '.')}} </td> -->
+                <td class="text-end pr-name"> IDR {{item.total|number_format(0, ',', '.')}} </td>
+                <td class="text-end">
+                    {% if item.status.name == 'Waiting for Payment' %}
+                        <div style="color: #d60000; font: italic normal 600 15px Montserrat;">
+                            <i class="fa fa-info-circle"></i>
+                            <span>
+                                {{item.status.name}}
+                            </span>
+                        </div>
+                    {% elseif item.status.name == 'Payment Processed' %}
+                        <div style="color: #596584; font: italic normal 600 15px Montserrat;">
+                            <i class="fa fa-clock"></i>
+                            <span>
+                                {{item.status.name}}
+                            </span>
+                        </div>
+                    {% elseif item.status.name == 'Paid' %}
+                        <div style="color: #58aa4f; font: italic normal 600 15px Montserrat;">
+                            <i class="fa fa-check-circle"></i>
+                            <span>
+                                {{item.status.name}}
+                            </span>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,24 @@
+<div class="modal fade" id="talent_job_alert" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-4">
+          <div class="form-login p-3">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="d-flex mb-4">
+                <h2 class="my-3 ms-4">Wait! Before you apply...</h2>
+              </div>
+              <p>If you applied to this job via referral, you will get employed and get money from us!</p>
+              <div class="row mt-4">
+                <div class="col-sm-6 mb-10-sm"><a href="#" class="btn btn-outline-primary w-100" data-bs-dismiss="modal" aria-label="Close">I just want to Apply</a></div>
+                <div class="col-sm-6"><a href="#" class="btn btn-yellow w-100" 
+                  data-request="heroAccount::onSwitchUser"
+                  data-request-success="$('#become_talent_modal').modal('hide');$('#congratulation').modal('show');"
+                  data-request-data="type: 'talent'"
+                  data-attach-loading
+                  >Find a Referral</a></div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,24 @@
+title = "My Clients - New"
+url = "/mycompany/client/new"
+layout = "default"
+
+[session]
+security = "user"
+allowedUserGroups[] = "admin_company"
+redirect = "home"
+
+[clientEdit]
+[master]
+==
+<section class="dtl-acc dtl-pp sec-first">
+    <div class="container">
+        <div class="row my-5 justify-content-center mt-30-m">
+            <div class="col-lg-8 col-md-10">
+                <div class="text-center">
+                    <div class="title-list text-start">New Client</div>
+                    {% partial 'mycompany/clients/form-client' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

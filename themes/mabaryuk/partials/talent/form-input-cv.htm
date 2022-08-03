@@ -1,0 +1,468 @@
+<!-- Step 1 -->
+<div class="deposit-form container-steps" id="step1">
+    <div class="mb-5">
+        <div class="status">
+            <span>We want to know you better!</span>
+            <span>1/4</span>
+        </div>
+        <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="title-list mb-4">Biodata</div>
+    <div class="group-li">
+        <div class="change-pp change-pp-cv dropzone-box">
+            <div class="view-box">
+                <div class="preview-zone {% if not talent.user.avatar %} hide {% endif %} ">
+                    <div class="box box-solid">
+                        <div class="box-body">
+                            <img src="{{ talent.user.avatar.getThumb(100, 100, {'quality': 80}) }}" alt="Avatar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropzone-wrapper {% if talent.user.avatar %} d-none {% endif %}">
+                <div class="dropzone-desc">
+                    <div class="text-start">
+                        <span><i data-feather="upload"></i> {{ 'Upload Your Photo</span>
+                        <p>formal photo (upper torso) with JPEG or PNG format maximum 2mb</p>
+                    </div>
+                </div>
+                <input type="file" name="avatar" class="dropzone" accept="image/*">
+            </div>
+            <div class="dropzone-action {% if not talent.user.avatar %} d-none {% endif %}">
+                <span class="text-darkblue"><i data-feather="check-circle"></i> {{ 'Photo Uploaded</span>
+                <div class="d-inline-flex mt-3">
+                    <a href="#" onclick="$('.dropzone').click()" class="btn btn-outline-primary btn-sm me-2 fs-14">Change Photo</a>
+                    <a href="javascript:void(0);" class="btn btn-outline-danger  btn-sm  fs-14 remove-preview">Delete Photo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="group-li mb-3">
+        <label for="">Name</label>
+        <input type="text" name="name" required value="{{ talent.name }}" class="form-control form-th" placeholder="Your Name">
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Email</label>
+                <input type="email" name="email" required value="{{ talent.email }}" class="form-control form-th" placeholder="Your active Email (for work or formal uses)">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Phone</label>
+                <label class="form-date form-phone">
+                    <span>+62</span>
+                    <input type="text" name="phone" required value="{{ talent.phone }}" class="form-control form-th" placeholder="Your active Phone Number">
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="group-li">
+        <label for="">About You</label>
+        <textarea class="form-control form-th input-count" data-count="#about_count" required rows="4" placeholder="Introduce yourself" name="user[about]" maxlength="240">{{ talent.user.about }}</textarea>
+    </div>
+    <div class="text-end mb-1">
+        <span class="forgot-pass" id="about_count">{{ talent.user.about|length }}/240</span>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Place of Birth</label>
+                <input type="text" name="user[birth_place]" required value="{{ talent.user.birth_place }}" class="form-control form-th" placeholder="Your birth place">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Date of Birth</label>
+                <label class="form-date" for="user_birth_date">
+                    <i data-feather="calendar"></i>
+                    <input type="text" name="user[birth_date]" required value="{% if talent.user.birth_date %}{{ talent.user.birth_date|date('d/m/Y') }}{% endif %}" class="form-control form-th datepicker" data-enddate="-10y" data-startview="years" placeholder="Your birthdate" id="user_birth_date">
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="group-li mb-3">
+        <label for="">Gender</label>
+        <div class="select-th">
+            <label for="male">
+                <input type="radio" name="user[gender]" required id="male" value="M" {% if talent.user.gender == 'M' %} checked {% endif %}>
+                <span>Male</span>
+            </label>
+            <label for="female">
+                <input type="radio" name="user[gender]" id="female" value="F" {% if talent.user.gender == 'F' %} checked {% endif %}>
+                <span>Female</span>
+            </label>
+        </div>
+    </div>
+    <div class="group-li mb-3">
+        <label for="">ID Card</label>
+        <input type="text" name="user[id_number]" required value="{{ talent.user.id_number }}" class="form-control form-th" placeholder="Your ID Card Number">
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <a href="javascript:void(0);" class="btn btn-primary w-100 py-2 btn-next" data-next="#step2">Next</a>
+        </div>
+    </div>
+</div>
+
+<!-- Step 2 -->
+<div class="deposit-form container-steps hide" id="step2">
+    <div class="mb-5">
+        <div class="status">
+            <span>One step closer!</span>
+            <span>2/4</span>
+        </div>
+        <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="title-list mb-4">Address & Formal Information</div>
+    <div class="group-li mb-3">
+        <label for="">Permanent Address (based on ID Card)</label>
+        <textarea class="form-control form-th" rows="4" name="user[address]" required placeholder="Your Permanent Address">{{ talent.user.address }}</textarea>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Province (based on ID Card)</label>
+                <select name="user[province_code]" id=""
+                    class="form-select form-th custom-select2"
+                    data-handler="master::onSearchLocation"
+                    data-minimum-input-length="2"
+                    data-ajax--delay="300"
+                    required
+                >
+                    <option value="">Choose your Province</option>
+                    {% if talent.user.province_code %}
+                        <option selected value="{{ talent.user.province_code }}">{{ talent.user.province.name }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">City (based on ID Card)</label>
+                <select name="user[city_code]" id=""
+                    class="form-select form-th custom-select2"
+                    {% if not talent.user.city_code %} disabled {% endif %}
+                    data-handler="master::onSearchLocation"
+                    data-minimum-input-length="2"
+                    data-ajax--delay="300"
+                    required
+                >
+                    <option value="">Choose your City</option>
+                    {% if talent.user.city_code %}
+                        <option selected value="{{ talent.user.city_code }}">{{ talent.user.city.name }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">District (based on ID Card)</label>
+                <select name="user[district_code]" id=""
+                    class="form-select form-th custom-select2"
+                    {% if not talent.user.district_code %} disabled {% endif %}
+                    data-handler="master::onSearchLocation"
+                    data-minimum-input-length="2"
+                    data-ajax--delay="300"
+                    required
+                >
+                    <option value="">Choose your District</option>
+                    {% if talent.user.district_code %}
+                        <option selected value="{{ talent.user.district_code }}">{{ talent.user.district.name }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Village (based on ID Card)</label>
+                <select name="user[village_code]" id=""
+                    class="form-select form-th custom-select2"
+                    {% if not talent.user.village_code %} disabled {% endif %}
+                    data-handler="master::onSearchLocation"
+                    data-minimum-input-length="2"
+                    data-ajax--delay="300"
+                    required
+                >
+                    <option value="">Choose your Village</option>
+                    {% if talent.user.village_code %}
+                        <option selected value="{{ talent.user.village_code }}">{{ talent.user.village.name }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="group-li form-check mb-2">
+        <input class="form-check-input" type="checkbox" value="1" id="is_address_diff" name="user[is_address_diff]" {% if user.is_address_diff %} checked {% endif %}>
+        <label class="form-check-label" for="is_address_diff">
+            Is your current address different? 
+        </label>
+    </div>
+    <div class="group-li mb-3 curr_address_box d-none">
+        <label for="">Current Address (Domicile)</label>
+        <textarea class="form-control form-th" rows="4" name="user[domicile_address]" placeholder="Current Address">{{ user.domicile_address }}</textarea>
+    </div>
+    <div class="row curr_address_box d-none">
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Province (Domicile)</label>
+                <select name="user[domicile_province_code]" id=""
+                    class="form-select form-th custom-select2"
+                    data-handler="master::onSearchLocation"
+                    data-minimum-input-length="2"
+                    data-ajax--delay="300"
+                >
+                    <option value="">Choose your Province</option>
+                    {% if talent.user.domicile_province_code %}
+                        <option selected value="{{ talent.user.domicile_province_code }}">{{ talent.user.domicile_province.name }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">City (Domicile)</label>
+                <select name="user[domicile_city_code]" id=""
+                    class="form-select form-th custom-select2"
+                    {% if not talent.user.domicile_city_code %} disabled {% endif %}
+                    data-handler="master::onSearchLocation"
+                    data-minimum-input-length="2"
+                    data-ajax--delay="300"
+                >
+                    <option value="">Choose your City</option>
+                    {% if talent.user.domicile_city_code %}
+                        <option selected value="{{ talent.user.domicile_city_code }}">{{ talent.user.domicile_city.name }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row curr_address_box d-none">
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">District (Domicile)</label>
+                <select name="user[domicile_district_code]" id=""
+                    class="form-select form-th custom-select2"
+                    {% if not talent.user.domicile_district_code %} disabled {% endif %}
+                    data-handler="master::onSearchLocation"
+                    data-minimum-input-length="2"
+                    data-ajax--delay="300"
+                >
+                    <option value="">Choose your District</option>
+                    {% if talent.user.domicile_district_code %}
+                        <option selected value="{{ talent.user.domicile_district_code }}">{{ talent.user.domicile_district.name }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Village (Domicile)</label>
+                <select name="user[domicile_village_code]" id=""
+                    class="form-select form-th custom-select2"
+                    {% if not talent.user.domicile_village_code %} disabled {% endif %}
+                    data-handler="master::onSearchLocation"
+                    data-minimum-input-length="2"
+                    data-ajax--delay="300"
+                >
+                    <option value="">Choose your Village</option>
+                    {% if talent.user.domicile_village_code %}
+                        <option selected value="{{ talent.user.domicile_village_code }}">{{ talent.user.domicile_village.name }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="group-li mb-3">
+        <label for="">NPWP</label>
+        <input type="text" name="user[npwp]" value="{{ user.npwp }}" class="form-control form-th" placeholder="Your NPWP Number">
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Nationality</label>
+                <select name="user[ref_country_id]" id=""
+                    class="form-select form-th custom-select2"
+                    data-handler="master::onSearchNationality"
+                    data-minimum-input-length="2"
+                    data-ajax--delay="300"
+                    required
+                >
+                    <option value="">Choose your Nationality</option>
+                    {% if talent.user.ref_country_id %}
+                        <option selected value="{{ talent.user.ref_country_id }}">{{ talent.user.ref_country.nationality }}</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="group-li mb-3">
+                <label for="">Status</label>
+                <select name="user[ref_marital_status_id]" required id="" class="form-select form-th custom-select2">
+                    <option value="">Your marriage status</option>
+                    {% for status in master.maritalStatuses %}
+                        <option value="{{ status.id }}" {% if talent.user.ref_marital_status_id == status.id %} selected {% endif %}>{{ status.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <a href="javascript:void(0);" class="btn btn-outline-secondary w-100 py-2 btn-prev" data-prev="#step1">Back</a>
+        </div>
+        <div class="col">
+            <a href="javascript:void(0);" class="btn btn-primary w-100 py-2 btn-next" data-next="#step3">Next</a>
+        </div>
+    </div>
+</div>
+
+<!-- Step 3 -->
+<div class="deposit-form container-steps hide" id="step3">
+    <div class="mb-5">
+        <div class="status">
+            <span>Almost There!</span>
+            <span>3/4</span>
+        </div>
+        <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="title-list mb-4">Education</div>
+    <div class="subtitle-list mb-3">Formal Education</div>
+    <div class="add-section">
+        <div id="educations-container">
+        {% if not talent.user.educations %}
+            {% partial 'talent/form-item-education' %}
+        {% else %}
+            {% for edu in talent.user.educations %}
+                {% partial 'talent/form-item-education' education=edu %}
+            {% endfor %}
+        {% endif %}
+        </div>
+        <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+            data-request="talentDetail::onAddItem"
+            data-request-update="'talent/form-item-education': '@#educations-container'"
+            data-request-success="refreshEle();containerCss(this);"
+        ><i data-feather="plus-circle"></i> Add More Formal Education</a>
+    </div>
+    <div class="subtitle-list mb-3">Certification</div>
+    <div class="add-section">
+        <div id="certificates-container">
+        {% if not talent.user.certificates %}
+            {% partial 'talent/form-item-certificate' %}
+        {% else %}
+            {% for cert in talent.user.certificates %}
+                {% partial 'talent/form-item-certificate' cert=cert %}
+            {% endfor %}
+        {% endif %}
+        </div>
+        <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+            data-request="talentDetail::onAddItem"
+            data-request-update="'talent/form-item-certificate': '@#certificates-container'"
+            data-request-success="refreshEle();containerCss(this);"
+        ><i data-feather="plus-circle"></i> Add More Certificate</a>
+    </div>
+    <div class="subtitle-list mb-3">Organization</div>
+    <div class="add-section">
+        <div id="organizations-container">
+        {% if not talent.user.organizations %}
+            {% partial 'talent/form-item-organization' %}
+        {% else %}
+            {% for org in talent.user.organizations %}
+                {% partial 'talent/form-item-organization' organization=org %}
+            {% endfor %}
+        {% endif %}
+        </div>
+        <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+            data-request="talentDetail::onAddItem"
+            data-request-update="'talent/form-item-organization': '@#organizations-container'"
+            data-request-success="refreshEle();containerCss(this);"
+        ><i data-feather="plus-circle"></i> Add More Organization</a>
+    </div>
+    <div class="subtitle-list mb-3">Language</div>
+    <div class="add-section">
+        <div id="lang-skills-container">
+        {% if not talent.user.lang_skills %}
+            {% partial 'talent/form-item-lang-skill' %}
+        {% else %}
+            {% for lang_skill in talent.user.lang_skills %}
+                {% partial 'talent/form-item-lang-skill' langSkill=lang_skill %}
+            {% endfor %}
+        {% endif %}
+        </div>
+        <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+            data-request="talentDetail::onAddItem"
+            data-request-update="'talent/form-item-lang-skill': '@#lang-skills-container'"
+            data-request-success="refreshEle();containerCss(this);"
+        ><i data-feather="plus-circle"></i> Add More Language</a>
+    </div>
+    <div class="subtitle-list mb-3">Skills</div>
+    <div class="add-section">
+        <div id="skills-container">
+        {% if not talent.user.skills %}
+            {% partial 'talent/form-item-skill' %}
+        {% else %}
+            {% for skill in talent.user.skills %}
+                {% partial 'talent/form-item-skill' skill=skill %}
+            {% endfor %}
+        {% endif %}
+        </div>
+        <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+            data-request="talentDetail::onAddItem"
+            data-request-update="'talent/form-item-skill': '@#skills-container'"
+            data-request-success="refreshEle();containerCss(this);"
+        ><i data-feather="plus-circle"></i> Add More Skill</a>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <a href="javascript:void(0);" class="btn btn-outline-secondary w-100 py-2 btn-prev" data-prev="#step2">Back</a>
+        </div>
+        <div class="col">
+            <a href="javascript:void(0);" class="btn btn-primary w-100 py-2 btn-next" data-next="#step4">Next</a>
+        </div>
+    </div>
+</div>
+
+<!-- Step 4 -->
+<div class="deposit-form container-steps hide" id="step4">
+    <div class="mb-5">
+        <div class="status">
+            <span>Last Step!</span>
+            <span>4/4</span>
+        </div>
+        <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="title-list mb-4">Working Experience</div>
+    <div class="add-section-working-experience">
+        <div id="working-exps-container">
+        {% if not talent.user.working_exps %}
+            {% partial 'talent/form-item-working-experience' key=0 %}
+        {% else %}
+            {% for i, exp in talent.user.working_exps %}
+                {% partial 'talent/form-item-working-experience' key=i experience=exp %}
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+    <a href="#" class="btn btn-outline-secondary w-100 fs-14"
+        data-increment="{{ talent.user.working_exps.count() }}"
+    ><i data-feather="plus-circle"></i> Add More Working Experience</a>
+    <div class="row mt-5">
+        <div class="col">
+            <a href="javascript:void(0);" class="btn btn-outline-secondary w-100 py-2 btn-prev" data-prev="#step3">Back</a>
+        </div>
+        <div class="col">
+            <button type="submit" data-attach-loading class="btn btn-yellow w-100 py-2" >Complete Profile</button>
+        </div>
+    </div>
+</div>

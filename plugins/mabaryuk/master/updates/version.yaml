@@ -1,0 +1,72 @@
+1.0.1: First version of Master
+1.0.2:
+    - 'Initialize Tables'
+    - create_ref_countries_table.php
+    - create_ref_industries_table.php
+    - create_ref_job_statuses_table.php
+    - create_ref_job_types_table.php
+    - create_ref_locations_table.php
+    - create_ref_progress_statuses_table.php
+1.0.3:
+    - 'Seed Tables'
+    - seed_ref_countries_table.php
+1.0.4:
+    - 'Change column on ref_locations table'
+    - change_latlng_on_ref_locations_table.php
+1.0.5:
+    - 'Seed tables'
+    - seed_ref_job_statuses_table.php
+    - seed_ref_progress_statuses_table.php
+1.0.6:
+    - 'Create division table'
+    - create_ref_divisions_table.php
+1.0.7:
+    - 'Create skill levels table'
+    - create_skill_levels_table.php
+1.0.8:
+    - 'Seed skill level'
+    - seed_ref_skill_levels_table.php
+1.0.9:
+    - 'Create master table for cv'
+    - create_education_table.php
+    - create_lang_levels_table.php
+    - create_langs_table.php
+    - create_marital_statuses_table.php
+    - create_prof_skill_levels_table.php
+1.0.10:
+    - 'Create seed master table for cv'
+    - seed_ref_education_table.php
+    - seed_ref_lang_levels_table.php
+    - seed_ref_langs_table.php
+    - seed_ref_marital_statuses_table.php
+    - seed_ref_prof_skill_levels_table.php
+1.0.11:
+    - 'Create & seed job categories table'
+    - create_job_categories_table.php
+    - seed_ref_job_categories_table.php
+1.0.12:
+    - 'Seed prof skill level 2nd table'
+    - seed_ref_prof_skill_levels2_table.php
+1.0.13:
+    - 'Add deposit columns on skill levels table'
+    - add_deposit_columns_on_skill_levels_table.php
+1.0.14:
+    - 'Add billing info tables'
+    - create_billing_statuses_table.php
+    - create_payment_methods_table.php
+    - create_banks_table.php
+    - create_bank_accounts_table.php
+1.0.15:
+    - 'Seed job type table'
+    - seed_ref_job_types_table.php
+1.0.16:
+    - 'Seed skill level 2'
+    - seed_ref_skill_levels2_table.php
+1.0.17:
+    - 'Seed payments'
+    - seed_ref_banks_table.php
+    - seed_ref_bank_accounts_table.php
+    - seed_ref_payment_methods_table.php
+1.0.18:
+    - 'Seed billing status'
+    - seed_ref_billing_statuses_table.php

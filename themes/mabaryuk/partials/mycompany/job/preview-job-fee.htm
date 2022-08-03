@@ -1,0 +1,27 @@
+{% if freshgrad_value and freshgrad_value > 0 %}
+<div class="group-li mb-3">
+    <label for="" class="text-blue font-weight-500">Fresh Graduate (0 Year Experience)</label> 
+    <input type="text" disabled name="" value="Rp. {{ freshgrad_value|number_format(0, ',', '.') }} ({{ freshgrad_number }} Positions)" required class="form-control form-th" placeholder="Fresh Graduate (0 Year Experience)">
+</div>
+{% endif %}
+
+{% if junior_value and junior_value > 0 %}
+<div class="group-li mb-3">
+    <label for="" class="text-blue font-weight-500">Junior (1-3 Years Experience)</label> 
+    <input type="text" disabled name="" value="Rp. {{ junior_value|number_format(0, ',', '.') }} ({{ junior_number }} Positions)" required class="form-control form-th" placeholder="Junior (1-3 Years Experience)">
+</div>
+{% endif %}
+
+{% if middle_value and middle_value > 0 %}
+<div class="group-li mb-3">
+    <label for="" class="text-blue font-weight-500">Middle (3-5 Years Experience)</label> 
+    <input type="text" disabled name="" value="Rp. {{ middle_value|number_format(0, ',', '.') }} ({{ middle_number }} Positions)" required class="form-control form-th" placeholder="Middle (3-5 Years Experience)">
+</div>
+{% endif %}
+
+{% if senior_value and senior_value > 0 %}
+<div class="group-li mb-3">
+    <label for="" class="text-blue font-weight-500">Senior (More than 5 Years Experience)</label> 
+    <input type="text" disabled name="" value="Rp. {{ senior_value|number_format(0, ',', '.') }} ({{ senior_number }} Positions)" required class="form-control form-th" placeholder="Senior (More than 5 Years Experience)">
+</div>
+{% endif %}
