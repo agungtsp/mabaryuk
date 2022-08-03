@@ -67,9 +67,13 @@ class Plugin extends PluginBase
                 'tab' => 'Master',
                 'label' => 'Manage master locations'
             ],
-            'mabaryuk.master.access_industries' => [
+            'mabaryuk.master.access_businesstypes' => [
                 'tab' => 'Master',
-                'label' => 'Manage master industries'
+                'label' => 'Manage master businesstypes'
+            ],
+            'mabaryuk.master.access_surahs' => [
+                'tab' => 'Master',
+                'label' => 'Manage master surah'
             ],
         ];
     }
@@ -95,11 +99,17 @@ class Plugin extends PluginBase
                         'url' => Backend::url('mabaryuk/master/locations'),
                         'permissions' => ['mabaryuk.master.access_locations'],
                     ],
-                    'industries' => [
-                        'label' => 'Industry',
+                    'businesstypes' => [
+                        'label' => 'Business Type',
                         'icon' => 'icon-industry',
-                        'url' => Backend::url('mabaryuk/master/industries'),
-                        'permissions' => ['mabaryuk.master.access_industries'],
+                        'url' => Backend::url('mabaryuk/master/businesstypes'),
+                        'permissions' => ['mabaryuk.master.access_businesstypes'],
+                    ],
+                    'surahs' => [
+                        'label' => 'Surah',
+                        'icon' => 'icon-book',
+                        'url' => Backend::url('mabaryuk/master/surahs'),
+                        'permissions' => ['mabaryuk.master.access_surahs'],
                     ],
                 ]
             ],

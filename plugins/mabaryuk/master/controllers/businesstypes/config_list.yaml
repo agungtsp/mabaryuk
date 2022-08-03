@@ -3,16 +3,16 @@
 # ===================================
 
 # Model List Column configuration
-list: $/mabaryuk/master/models/industry/columns.yaml
+list: $/mabaryuk/master/models/businesstype/columns.yaml
 
 # Model Class name
-modelClass: MabarYuk\Master\Models\Industry
+modelClass: MabarYuk\Master\Models\BusinessType
 
 # List Title
 title: Manage Industries
 
 # Link URL for each record
-recordUrl: mabaryuk/master/industries/update/:id
+recordUrl: mabaryuk/master/businesstypes/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

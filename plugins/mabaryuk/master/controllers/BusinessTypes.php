@@ -4,9 +4,9 @@ use BackendMenu;
 use Backend\Classes\Controller;
 
 /**
- * Industries Backend Controller
+ * BusinessType Backend Controller
  */
-class Industries extends Controller
+class BusinessTypes extends Controller
 {
     public $implement = [
         \Backend\Behaviors\FormController::class,
@@ -30,6 +30,6 @@ class Industries extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('MabarYuk.Master', 'master', 'industries');
+        BackendMenu::setContext('MabarYuk.Master', 'master', 'businesstypes');
     }
 }

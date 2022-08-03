@@ -93,3 +93,8 @@ secondaryTabs:
             mode: image
             imageHeight: 260
             imageWidth: 260
+
+        referral_code:
+            label: ID Card
+            type: partial
+            path: ~/plugins/rainlab/user/models/user/_qrcode.html

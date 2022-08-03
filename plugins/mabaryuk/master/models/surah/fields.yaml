@@ -7,10 +7,15 @@ fields:
         label: Name
         required: true
         span: auto
-    alias:
-        label: Alias
+    code:
+        label: Code
+        required: true
+        span: auto
+    link:
+        label: Link
+        required: true
         span: auto
     description:
         label: Description
-        type: textarea
         span: auto
+        type: textarea

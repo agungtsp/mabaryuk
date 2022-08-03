@@ -32,8 +32,6 @@ use MabarYuk\User\Models\Lang as LangModel;
 use Exception;
 use Log;
 use PHPUnit\Framework\Constraint\IsTrue;
-use MabarYuk\Company\Models\Company;
-use MabarYuk\Master\Models\Industry;
 use ReCaptcha\ReCaptcha;
 use MabarYuk\User\Models\Recaptcha as RecaptchaSetting;
 
@@ -71,7 +69,6 @@ class Account extends RainLabAccount
         }
 
         $this->prepareVars();
-        $this->page['industries'] = Industry::get();
     }
 
     /**

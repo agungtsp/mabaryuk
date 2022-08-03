@@ -6,6 +6,6 @@ columns:
     name:
         label: Name
         searchable: true
-    alias:
-        label: Alias
+    code:
+        label: Code
         searchable: true

@@ -131,6 +131,27 @@ class User extends UserBase
             $this->sendInvitation();
         }
     }
+    
+    public function beforeSave()
+    {
+        if(!$this->referral_code){
+            $this->referral_code = $this->randomString(10);
+        }
+    }
+
+    public function beforeUpdate()
+    {
+        if(!$this->referral_code){
+            $this->referral_code = $this->randomString(10);
+        }
+    }
+
+    private function randomString($length_of_string) 
+    { 
+        $str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz'; 
+        return substr(str_shuffle($str_result), 0, $length_of_string); 
+    } 
+    
 
     //
     // Constructors

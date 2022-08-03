@@ -3,16 +3,16 @@
 use Model;
 
 /**
- * Industry Model
+ * BusinessType Model
  */
-class Industry extends BaseModel
+class BusinessType extends BaseModel
 {
     use \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string table associated with the model
      */
-    public $table = 'mabaryuk_ref_industries';
+    public $table = 'mabaryuk_business_types';
 
     /**
      * @var array guarded attributes aren't mass assignable

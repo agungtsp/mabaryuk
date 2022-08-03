@@ -3,28 +3,28 @@
 # ===================================
 
 # Record name
-name: Industry
+name: BusinessType
 
 # Model Form Field configuration
-form: $/mabaryuk/master/models/industry/fields.yaml
+form: $/mabaryuk/master/models/businesstype/fields.yaml
 
 # Model Class name
-modelClass: MabarYuk\Master\Models\Industry
+modelClass: MabarYuk\Master\Models\BusinessType
 
 # Default redirect location
-defaultRedirect: mabaryuk/master/industries
+defaultRedirect: mabaryuk/master/businesstypes
 
 # Create page
 create:
     title: backend::lang.form.create_title
-    redirect: mabaryuk/master/industries/update/:id
-    redirectClose: mabaryuk/master/industries
+    redirect: mabaryuk/master/businesstypes/update/:id
+    redirectClose: mabaryuk/master/businesstypes
 
 # Update page
 update:
     title: backend::lang.form.update_title
-    redirect: mabaryuk/master/industries
-    redirectClose: mabaryuk/master/industries
+    redirect: mabaryuk/master/businesstypes
+    redirectClose: mabaryuk/master/businesstypes
 
 # Preview page
 preview:
