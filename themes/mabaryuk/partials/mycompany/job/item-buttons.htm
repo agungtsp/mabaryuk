@@ -1,8 +1,0 @@
-<div class="action mt-5">
-    <a href="{{ url('mycompany/job/' ~ job.id ~ '/candidates') }}" class="btn btn-yellow w-auto">View All Candidates</a>
-    <a href="{{ url('mycompany/job/' ~ job.id ~ '/edit') }}" class="btn btn-outline-secondary w-auto ms-1">Edit</a>
-    <a href="#" class="btn btn-outline-danger w-auto ms-1" data-bs-toggle="modal" data-bs-target="#delete_modal-{{ job.id }}">Delete</a>
-</div>
-
-<!-- Modal Delete -->
-{% partial 'mycompany/job/modal-delete' job=job %}
